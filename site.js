@@ -52,8 +52,9 @@
 
   function sync() {
     var on = !audio.paused;
+    if (on) tunesBtn.classList.remove('nudge');
     tunesBtn.setAttribute('aria-pressed', String(on));
-    tunesLabel.textContent = on ? 'Tunes on' : 'Tunes off';
+    tunesLabel.textContent = on ? 'Tunes on' : tunesBtn.classList.contains('nudge') ? 'Click for tunes' : 'Tunes off';
     var lairOn = on && audio.getAttribute('src') === LAIRS[current].track;
     stagePlay.setAttribute('aria-pressed', String(lairOn));
     stagePlay.textContent = lairOn ? 'Stop the tune' : 'Play its tune';
@@ -69,14 +70,24 @@
   audio.addEventListener('pause', sync);
   audio.addEventListener('error', sync);
 
+  // Somebody who switched the music off stays off on their next visit.
+  function pref(value) {
+    try {
+      if (value) localStorage.setItem('hoard-tunes', value);
+      return localStorage.getItem('hoard-tunes');
+    } catch (e) { return null; }
+  }
+
   tunesBtn.addEventListener('click', function () {
-    if (!audio.paused) { audio.pause(); return; }
+    if (!audio.paused) { audio.pause(); pref('off'); return; }
+    pref('on');
     play(audio.getAttribute('src') || MAIN_THEME);
   });
 
   stagePlay.addEventListener('click', function () {
     var lair = LAIRS[current];
-    if (!audio.paused && audio.getAttribute('src') === lair.track) { audio.pause(); return; }
+    if (!audio.paused && audio.getAttribute('src') === lair.track) { audio.pause(); pref('off'); return; }
+    pref('on');
     play(lair.track);
   });
 
@@ -102,8 +113,42 @@
   }
 
   thumbs.forEach(function (t) {
-    t.addEventListener('click', function () { pick(t.dataset.lair); });
+    t.addEventListener('click', function () { pref('on'); pick(t.dataset.lair); });
   });
+
+  // Every browser refuses sound until the visitor has touched the page, so
+  // the music tries once on load and otherwise starts on the first click, tap
+  // or key anywhere. A touch only counts as permission on release, which is
+  // why the listeners stay armed until a play actually succeeds rather than
+  // coming off at the first event. Presses on the music controls themselves
+  // are left to their own handlers, or the first click on Tunes would start
+  // the music here and stop it again there.
+  var GESTURES = ['pointerdown', 'pointerup', 'touchend', 'keydown', 'click'];
+  var CONTROLS = '[data-tunes], [data-stage-play], [data-lair]';
+
+  function disarm() {
+    GESTURES.forEach(function (g) { window.removeEventListener(g, onGesture, true); });
+    tunesBtn.classList.remove('nudge');
+    sync();
+  }
+
+  function onGesture(ev) {
+    if (!audio.paused || (ev.target.closest && ev.target.closest(CONTROLS))) { disarm(); return; }
+    var p = audio.play();
+    if (p && p.then) p.then(disarm, function () {});
+  }
+
+  if (pref() !== 'off') {
+    audio.src = MAIN_THEME;
+    var first = audio.play();
+    if (first && first.catch) {
+      first.catch(function () {
+        tunesBtn.classList.add('nudge');
+        sync();
+        GESTURES.forEach(function (g) { window.addEventListener(g, onGesture, true); });
+      });
+    }
+  }
 
   // Version and size from the release itself, so the page never goes stale.
   // If GitHub does not answer, the static line stays and the button still works.

@@ -96,6 +96,8 @@ a:hover { color: var(--ember); }
 }
 .tunes:hover { border-color: var(--gold); }
 .tunes[aria-pressed="true"] { color: var(--ink); background: var(--gold); border-color: var(--ink); }
+.tunes.nudge { animation: nudge 1s steps(2) infinite; }
+@keyframes nudge { 50% { color: var(--ember); border-color: var(--ember); } }
 .tunes .waves { display: none; }
 .tunes[aria-pressed="true"] .waves { display: inline; }
 .tunes[aria-pressed="true"] .mute { display: none; }

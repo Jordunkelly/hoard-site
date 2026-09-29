@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoard</title>
+<meta name="description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy.">
+<meta name="theme-color" content="#f5820a">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hoard">
+<meta property="og:title" content="Hoard">
+<meta property="og:description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy.">
+<meta property="og:url" content="https://jordunkelly.github.io/hoard-site/">
+<meta property="og:image" content="https://jordunkelly.github.io/hoard-site/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A goblin vault piled with gold, and the word Hoard">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="assets/art/favicon.png">
+<link rel="apple-touch-icon" href="assets/art/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/art/vault.webp" as="image">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="wordmark" href="#top"><img src="assets/art/favicon.png" alt="" width="24" height="24">HOARD</a>
+  <button class="tunes" type="button" aria-pressed="false" data-tunes>
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges">
+      <rect x="1" y="5" width="3" height="6" fill="currentColor"/>
+      <rect x="4" y="4" width="2" height="8" fill="currentColor"/>
+      <rect x="6" y="2" width="2" height="12" fill="currentColor"/>
+      <g class="waves"><rect x="10" y="6" width="1" height="4" fill="currentColor"/><rect x="12" y="4" width="1" height="8" fill="currentColor"/><rect x="14" y="2" width="1" height="12" fill="currentColor"/></g>
+      <g class="mute"><rect x="10" y="5" width="1" height="1" fill="currentColor"/><rect x="11" y="6" width="1" height="1" fill="currentColor"/><rect x="12" y="7" width="2" height="2" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="10" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/></g>
+    </svg>
+    <span data-tunes-label>Tunes off</span>
+  </button>
+</div>
+
+<header class="hero" id="top">
+  <div class="embers" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="kicker">For the boyzzzzzz.</p>
+    <img class="chest" src="assets/art/chest.png" alt="" width="160" height="160">
+    <h1 class="title">HOARD</h1>
+    <p class="tagline">A budget app that is secretly a goblin RPG.</p>
+    <a class="btn-dl" href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
+      <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="8" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="7" y="10" width="2" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="2" fill="currentColor"/></svg>
+      Download for Windows
+    </a>
+    <p class="dl-meta" data-dl-meta>Windows only. It updates itself.</p>
+    <p class="smartscreen">Windows might clutch its pearls because the installer isn't signed yet. Hit <b>More info</b>, then <b>Run anyway</b>.</p>
+  </div>
+  <a class="scroll-cue" href="#gribble" aria-label="Read on">&#9660;</a>
+</header>
+
+<main>
+
+  <section class="wrap" id="gribble">
+    <div class="dialog reveal">
+      <figure class="portrait">
+<pre class="ascii" aria-label="A goblin, drawn in text">  /\             /\
+ /  \  _______  /  \
+ \   \/       \/   /
+  \   \ \   / /   /
+   \__| O   O |__/
+      |   ^   |
+      | \VVV/ |
+       \_____/</pre>
+        <figcaption class="nameplate">GRIBBLE</figcaption>
+      </figure>
+      <div class="speech">
+        <p>Oi. Gribble here. I count your gold so you don't have to look. Trust me. You don't want to look.</p>
+        <p>This is Hoard. A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. Everything stays on your PC. No cloud. No ads. No mercy. Not even your ex gets a copy.</p>
+        <span class="caret" aria-hidden="true">&#9660;</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="panel reveal">
+      <h2>Built like a tank.</h2>
+      <p class="speech-text">Your stored bank emails and mail password are locked with AES 256. Set a passphrase and nobody opens them without it. Not a thief with your hard drive. Not malware. Not me. Updates are signed, so nobody slips me a fake one. Backups are sealed. Hoard's own server answers Hoard and nothing else. Zero telemetry. Zero accounts. I don't even know your name. I don't want to.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="panel leaves reveal">
+      <div>
+        <h2>What leaves your PC. The whole list.</h2>
+        <ol class="ledger">
+          <li><span class="num">1</span><span>Your own mailbox, over TLS, to fetch your alerts.</span></li>
+          <li><span class="num">2</span><span>GitHub, every 10 minutes, asking if there's a new version. It sees your IP. That's it.</span></li>
+          <li><span class="num">3</span><span>DuckDuckGo, once per shop, for logos. Only if you said yes.</span></li>
+        </ol>
+        <p class="speech-text">The last two switch off in Settings.</p>
+      </div>
+      <img class="sprite" src="assets/art/harvest-walk.webp" alt="A goblin pushing a mine cart full of letters" width="240" height="240" loading="lazy">
+    </div>
+  </section>
+
+  <section class="lairs" id="lairs" aria-labelledby="lairs-h">
+    <div class="wrap">
+      <h2 id="lairs-h" class="reveal">Pick your lair.</h2>
+      <p class="speech-text lairs-lede reveal">Five themes come with Hoard. You start with one. The rest you earn. Click one and I'll put a tune on.</p>
+      <div class="stage reveal">
+        <img class="stage-art" data-stage-art src="assets/art/theme-hearth.webp" alt="Hearth: a cabin at night with a fire going" width="1600" height="896" loading="lazy">
+        <div class="stage-bar">
+          <div>
+            <p class="stage-name" data-stage-name>Hearth</p>
+            <p class="stage-level" data-stage-level>Yours from level 1</p>
+          </div>
+          <button class="stage-play" type="button" data-stage-play aria-pressed="false">Play its tune</button>
+        </div>
+      </div>
+      <div class="thumbs" role="group" aria-label="Themes">
+        <button type="button" class="thumb" aria-pressed="true" data-lair="hearth"><img src="assets/art/thumb-hearth.webp" alt="" width="480" height="269" loading="lazy"><span>Hearth</span><em>LVL 1</em></button>
+        <button type="button" class="thumb" aria-pressed="false" data-lair="elder"><img src="assets/art/thumb-elder.webp" alt="" width="480" height="262" loading="lazy"><span>Elder Moss</span><em>LVL 10</em></button>
+        <button type="button" class="thumb" aria-pressed="false" data-lair="tundra"><img src="assets/art/thumb-tundra.webp" alt="" width="480" height="268" loading="lazy"><span>Frostbite Tundra</span><em>LVL 20</em></button>
+        <button type="button" class="thumb" aria-pressed="false" data-lair="market"><img src="assets/art/thumb-market.webp" alt="" width="480" height="268" loading="lazy"><span>Starlit Market</span><em>LVL 40</em></button>
+        <button type="button" class="thumb" aria-pressed="false" data-lair="celestial"><img src="assets/art/thumb-celestial.webp" alt="" width="480" height="268" loading="lazy"><span>Celestial Falls</span><em>LVL 60</em></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="panel crime reveal">
+      <img class="sprite wide" src="assets/art/destroying-vault.webp" alt="A wizard blasting a vault full of gold apart" width="360" height="196" loading="lazy">
+      <div>
+        <h2>Donate your body to science.</h2>
+        <p class="speech-text">Install it. Break it. Screenshot the crime scene for the group chat. Testers get a free Steam key at launch. I don't make deals twice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="panel locked reveal">
+      <svg class="padlock" viewBox="0 0 16 16" width="48" height="48" aria-hidden="true" shape-rendering="crispEdges"><rect x="5" y="1" width="6" height="2" fill="currentColor"/><rect x="4" y="2" width="2" height="5" fill="currentColor"/><rect x="10" y="2" width="2" height="5" fill="currentColor"/><rect x="2" y="7" width="12" height="8" fill="currentColor"/><rect x="7" y="9" width="2" height="4" fill="#0a0a0f"/></svg>
+      <p class="speech-text">For the thirsty mfs: the Maul is locked. It's a concept. Stop licking the glass.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="finale reveal">
+      <img class="clerk" src="assets/art/clerk.webp" alt="A goblin bank clerk throwing gold in the air" width="320" height="320" loading="lazy">
+      <div>
+        <p class="speech-text"><a href="https://github.com/Jordunkelly/hoard-releases/releases/latest">Grab the latest build</a>. Windows only. It updates itself. Mac bros, skill issue.</p>
+        <a class="btn-dl" href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
+          <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="8" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="7" y="10" width="2" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="2" fill="currentColor"/></svg>
+          Download for Windows
+        </a>
+        <p class="dl-meta" data-dl-meta>Windows only. It updates itself.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>The Keeper has the energy of a goblin on six espressos. This page may change on a dime. Yes, that was a money pun. I hate it too.</p>
+</footer>
+
+<audio data-audio preload="none" loop></audio>
+<script src="site.js"></script>
+</body>
+</html>

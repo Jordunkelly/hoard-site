@@ -168,6 +168,61 @@
       .catch(function () {});
   }
 
+  // Midnight on Christmas morning in the visitor's own timezone. Every
+  // "Are we there yet" past the fourth adds a day of spite to the display, and
+  // a reload forgives it.
+  var CHRISTMAS = new Date(2026, 11, 25).getTime();
+  var DAY = 86400000;
+  var spite = 0;
+  var cd = {};
+  ['d', 'h', 'm', 's'].forEach(function (k) { cd[k] = document.querySelector('[data-cd="' + k + '"]'); });
+  var spiteLine = document.querySelector('[data-spite]');
+  var nagBtn = document.querySelector('[data-nag]');
+  var nagReply = document.querySelector('[data-nag-reply]');
+  var NAGS = [
+    'No.',
+    'Still no.',
+    'You ask the oven if the bread is done every four seconds, don\'t you. I can tell.',
+    'Ask me one more time and I add a day.',
+    'SPITE',
+    'Keep going. I have all year. Literally.',
+    'Do you want it to be Easter? Because this is how it becomes Easter.'
+  ];
+  var nagAt = 0;
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function tick() {
+    var left = CHRISTMAS + spite * DAY - Date.now();
+    if (left <= 0) {
+      cd.d.textContent = cd.h.textContent = cd.m.textContent = cd.s.textContent = '00';
+      nagReply.textContent = 'Any day now. Stop refreshing.';
+      return false;
+    }
+    cd.d.textContent = String(Math.floor(left / DAY));
+    cd.h.textContent = pad(Math.floor(left / 3600000) % 24);
+    cd.m.textContent = pad(Math.floor(left / 60000) % 60);
+    cd.s.textContent = pad(Math.floor(left / 1000) % 60);
+    return true;
+  }
+
+  if (tick()) {
+    var clock = setInterval(function () { if (!tick()) clearInterval(clock); }, 1000);
+  }
+
+  nagBtn.addEventListener('click', function () {
+    var line = NAGS[nagAt];
+    nagAt = (nagAt + 1) % NAGS.length;
+    if (line === 'SPITE') {
+      spite += 1;
+      line = spite === 1 ? 'Right. That\'s a day. Well done.' : 'Another day. You\'re really committed to this.';
+      spiteLine.hidden = false;
+      spiteLine.textContent = '+' + spite + (spite === 1 ? ' day' : ' days') + ' of goblin spite. Reload to say sorry.';
+      tick();
+    }
+    nagReply.textContent = line;
+  });
+
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!still) {

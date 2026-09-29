@@ -151,8 +151,21 @@ a:hover { color: var(--ember); }
   color: var(--gold);
   text-shadow: 4px 4px 0 #7a3d06, 8px 8px 0 #000;
 }
+.release-tag {
+  margin: 0 0 26px;
+  padding: 9px 12px;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--gold);
+  background: rgba(10,10,15,.75);
+  border: 2px solid var(--gold);
+  box-shadow: 3px 3px 0 #000;
+  text-decoration: none;
+}
+.release-tag:hover { color: var(--ember); border-color: var(--ember); }
 .tagline {
-  margin: 20px 0 28px;
+  margin: 20px 0 18px;
   font-family: var(--voice);
   font-size: clamp(26px, 5vw, 34px);
   line-height: 1.1;
@@ -343,6 +356,64 @@ main > section.wrap:first-child { margin-top: 24px; }
   align-items: center;
 }
 
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 6px 0 20px;
+}
+.countdown div {
+  padding: 18px 6px 12px;
+  text-align: center;
+  background: var(--inset);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 #000;
+}
+.countdown b {
+  display: block;
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: clamp(20px, 6vw, 44px);
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 3px 3px 0 #000;
+}
+.countdown span {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--voice);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+}
+.spite {
+  margin: 0 0 16px;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--rose);
+}
+.nag {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.nag-btn {
+  flex: none;
+  font-family: var(--pixel);
+  font-size: 11px;
+  padding: 14px 16px;
+  color: var(--ink);
+  background: var(--gold);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+}
+.nag-btn:hover { background: var(--ember); }
+.nag-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+.panel .nag-reply { margin: 0; }
+.finale em { font-style: normal; color: var(--ember); }
+
 .locked {
   display: flex;
   gap: 20px;
@@ -504,6 +575,9 @@ main > section.wrap:first-child { margin-top: 24px; }
   .speech p, .speech-text { font-size: 24px; }
   .ledger li { font-size: 23px; }
   .leaves, .crime, .finale { grid-template-columns: 1fr; }
+  .countdown { gap: 8px; }
+  .countdown span { font-size: 17px; }
+  .nag { flex-direction: column; align-items: flex-start; }
   .sprite { justify-self: center; width: 180px; }
   .sprite.wide { width: 100%; }
   .clerk { width: 180px; justify-self: center; }

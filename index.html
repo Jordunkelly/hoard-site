@@ -25,7 +25,18 @@
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
 <link rel="stylesheet" href="style.css">
-<script>document.documentElement.classList.add('js')</script>
+<script>
+// Runs before the body paints, so a phone never flashes a download button it
+// cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
+// which is what the touch point check is for.
+(function (d, n) {
+  d.classList.add('js');
+  var u = n.userAgent || '';
+  if ((n.userAgentData && n.userAgentData.mobile) ||
+      /Android|iPhone|iPad|iPod|Mobile|Silk|Kindle/i.test(u) ||
+      (n.platform === 'MacIntel' && n.maxTouchPoints > 1)) d.classList.add('is-mobile');
+})(document.documentElement, navigator);
+</script>
 </head>
 <body>
 
@@ -51,10 +62,18 @@
     <h1 class="title">HOARD</h1>
     <p class="tagline">A budget app that is secretly a goblin RPG.</p>
     <a class="release-tag" href="#steam">Steam release · Christmas 2026</a>
-    <a class="btn-dl" href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
+    <a class="btn-dl" data-dl href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
       <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="8" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="7" y="10" width="2" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="2" fill="currentColor"/></svg>
       Download for Windows
     </a>
+    <div class="mobile-dl">
+      <span class="btn-dl is-off" aria-disabled="true">
+        <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="4" y="1" width="8" height="1" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="currentColor"/><rect x="3" y="2" width="1" height="12" fill="currentColor"/><rect x="12" y="2" width="1" height="12" fill="currentColor"/><rect x="7" y="12" width="2" height="1" fill="currentColor"/><rect x="6" y="3" width="4" height="1" fill="currentColor"/></svg>
+        Mobile coming soon
+      </span>
+      <p class="mobile-note">You're on a phone. Hoard lives on a PC for now. Send yourself the link and grab it there.</p>
+      <button type="button" class="btn-send" data-send>Send it to my PC</button>
+    </div>
     <p class="dl-meta" data-dl-meta>Windows only. It updates itself.</p>
     <p class="smartscreen">Windows might clutch its pearls because the installer isn't signed yet. Hit <b>More info</b>, then <b>Run anyway</b>.</p>
   </div>
@@ -168,12 +187,19 @@
     <div class="finale reveal">
       <img class="clerk" src="assets/art/clerk.webp" alt="A goblin bank clerk throwing gold in the air" width="320" height="320" loading="lazy">
       <div>
-        <p class="speech-text"><a href="https://github.com/Jordunkelly/hoard-releases/releases/latest">Grab the latest build</a>. Windows only. It updates itself. Mac bros, skill issue.</p>
+        <p class="speech-text"><a data-dl-link href="https://github.com/Jordunkelly/hoard-releases/releases/latest">Grab the latest build</a>. Windows only. It updates itself. Mac bros, skill issue.</p>
         <p class="speech-text">And no, there is <em>no phone app yet</em>, you greedy little gremlin. It's a PC. Sit at it.</p>
-        <a class="btn-dl" href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
+        <a class="btn-dl" data-dl href="https://github.com/Jordunkelly/hoard-releases/releases/latest/download/Hoard.Setup.exe">
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="8" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="7" y="10" width="2" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="2" fill="currentColor"/></svg>
           Download for Windows
         </a>
+        <div class="mobile-dl start">
+          <span class="btn-dl is-off" aria-disabled="true">
+            <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges"><rect x="4" y="1" width="8" height="1" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="currentColor"/><rect x="3" y="2" width="1" height="12" fill="currentColor"/><rect x="12" y="2" width="1" height="12" fill="currentColor"/><rect x="7" y="12" width="2" height="1" fill="currentColor"/><rect x="6" y="3" width="4" height="1" fill="currentColor"/></svg>
+            Mobile coming soon
+          </span>
+          <button type="button" class="btn-send" data-send>Send it to my PC</button>
+        </div>
         <p class="dl-meta" data-dl-meta>Windows only. It updates itself.</p>
       </div>
     </div>

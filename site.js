@@ -150,6 +150,31 @@
     }
   }
 
+  // Most people meet this page in a group chat on their phone, where the
+  // installer is no use. The phone gets a way to hand the link to a PC
+  // instead: the share sheet where there is one, the clipboard where not, and
+  // the bare address as a last resort.
+  if (root.classList.contains('is-mobile')) {
+    document.querySelectorAll('[data-dl-link]').forEach(function (a) { a.removeAttribute('href'); });
+  }
+  document.querySelectorAll('[data-send]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var url = location.href.split('#')[0];
+      if (navigator.share) {
+        navigator.share({ title: 'Hoard', text: 'Hoard. Grab it on your PC.', url: url }).catch(function () {});
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(
+          function () { btn.textContent = 'Link copied. Paste it on your PC.'; },
+          function () { btn.textContent = url; }
+        );
+        return;
+      }
+      btn.textContent = url;
+    });
+  });
+
   // Version and size from the release itself, so the page never goes stale.
   // If GitHub does not answer, the static line stays and the button still works.
   if (window.fetch) {

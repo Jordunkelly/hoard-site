@@ -455,14 +455,15 @@ main > section.wrap:first-child { margin-top: 24px; }
 .panel .nag-reply { margin: 0; }
 .finale em { font-style: normal; color: var(--ember); }
 
-.locked {
+.wip {
   display: flex;
   gap: 20px;
   align-items: center;
-  border-color: var(--rose);
+  border-color: var(--gold);
+  border-image: repeating-linear-gradient(45deg, var(--gold) 0 10px, #0a0a0f 10px 20px) 6;
 }
-.locked .padlock { flex: none; color: var(--rose); }
-.locked .speech-text { margin: 0; }
+.wip .hazard { flex: none; color: var(--gold); }
+.wip .speech-text { margin: 0; }
 
 /* ── Lairs ── */
 .lairs {

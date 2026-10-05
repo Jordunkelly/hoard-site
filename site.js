@@ -274,4 +274,24 @@
     }, { rootMargin: '0px 0px -10% 0px' });
     reveals.forEach(function (el) { io.observe(el); });
   }
+  // The clips play while they are on screen and stop when they leave, so four
+  // videos are not all decoding at once on a phone. Loaded only once seen:
+  // preload is none, and the poster stands in until then. With reduced motion
+  // nothing plays by itself, and the controls are there to start it.
+  var clips = document.querySelectorAll('.clip video');
+  clips.forEach(function (v) {
+    v.addEventListener('click', function () { if (v.paused) v.play().catch(function () {}); else v.pause(); });
+  });
+  if (still || !('IntersectionObserver' in window)) {
+    clips.forEach(function (v) { v.controls = true; });
+  } else {
+    var watch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var v = en.target;
+        if (en.isIntersecting) v.play().catch(function () {});
+        else v.pause();
+      });
+    }, { threshold: 0.5 });
+    clips.forEach(function (v) { watch.observe(v); });
+  }
 })();

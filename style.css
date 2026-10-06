@@ -151,19 +151,35 @@ a:hover { color: var(--ember); }
   color: var(--gold);
   text-shadow: 4px 4px 0 #7a3d06, 8px 8px 0 #000;
 }
-.release-tag {
+/* Valve's terms for the logo: their artwork only, pure white on a dark
+   ground, never recoloured or redrawn, at least 50px tall, and a clear margin
+   the width of the locomotive crank (about 19px at that height) with nothing
+   inside it. The padding on .steam-mark is that margin, so hover repaints the
+   frame and the date and leaves the logo alone. */
+.steam-box {
+  display: flex;
+  align-items: stretch;
   margin: 0 0 26px;
-  padding: 9px 12px;
-  font-family: var(--pixel);
-  font-size: 10px;
-  line-height: 1.4;
   color: var(--gold);
-  background: rgba(10,10,15,.75);
+  background: rgba(10,10,15,.85);
   border: 2px solid var(--gold);
   box-shadow: 3px 3px 0 #000;
   text-decoration: none;
 }
-.release-tag:hover { color: var(--ember); border-color: var(--ember); }
+.steam-mark { flex: none; padding: 20px; }
+.steam-mark img { width: 165px; height: 50px; }
+.steam-when {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-left: 2px solid var(--border-hi);
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.8;
+  text-align: left;
+  text-shadow: 1px 1px 0 #000;
+}
+.steam-box:hover { color: var(--ember); border-color: var(--ember); }
 .tagline {
   margin: 20px 0 18px;
   font-family: var(--voice);
@@ -686,6 +702,12 @@ main > section.wrap:first-child { margin-top: 24px; }
   line-height: 1.25;
   color: var(--muted);
 }
+.footer .legal {
+  margin-top: 18px;
+  font-family: var(--plain);
+  font-size: 13px;
+  line-height: 1.5;
+}
 
 /* ── Reveal on scroll. Hidden only when script is running, so a page
    without it still shows everything. ── */
@@ -722,6 +744,8 @@ main > section.wrap:first-child { margin-top: 24px; }
   .clip-what { font-size: 21px; }
 }
 @media (max-width: 420px) {
+  .steam-box { flex-direction: column; align-items: center; }
+  .steam-when { padding: 12px 20px; border-left: 0; border-top: 2px solid var(--border-hi); align-self: stretch; justify-content: center; text-align: center; }
   .thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tunes span { display: none; }
 }

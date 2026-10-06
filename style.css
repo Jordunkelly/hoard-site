@@ -413,6 +413,19 @@ main > section.wrap:first-child { margin-top: 24px; }
   align-items: center;
 }
 
+/* The same clear margin as the hero box: the panel padding covers the top
+   and left, and the gap covers the heading whether it sits beside the logo
+   or wraps under it. */
+.steam-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin: 0 0 18px;
+}
+.steam-head img { flex: none; width: 165px; height: 50px; }
+.panel .steam-head h2 { margin: 0; }
+
 .countdown {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

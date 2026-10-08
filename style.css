@@ -769,3 +769,30 @@ main > section.wrap:first-child { margin-top: 24px; }
   .embers { display: none; }
   html { scroll-behavior: auto; }
 }
+
+/* The two promises the product is built on, as tags under the tagline. */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid var(--gold);
+  box-shadow: 3px 3px 0 #000;
+  cursor: default;
+}
+.tag svg { width: 14px; height: 14px; flex: none; }

@@ -819,3 +819,4 @@ main > section.wrap:first-child { margin-top: 24px; }
 .watch-ranks figure:last-child img { border-color: #8a5cf6; }
 .watch-ranks-cap { font-family: var(--voice); font-size: 1.35rem; text-align: center; margin: 8px 0 0; }
 .watch-tile figcaption b { display: block; font-family: var(--pixel); font-size: .55rem; font-weight: normal; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+@media (max-width: 640px) { a.watch-chip { display: inline-flex; width: auto; max-width: calc(100% - 2 * var(--gutter)); font-size: 1rem; line-height: 1.1; padding: 3px 8px 3px 3px; } a.watch-chip img { width: 22px; height: 22px; } }

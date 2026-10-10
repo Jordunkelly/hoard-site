@@ -808,9 +808,6 @@ main > section.wrap:first-child { margin-top: 24px; }
 .watch-tile figcaption { font-family: var(--voice); font-size: 1.35rem; color: var(--text); padding: 8px 10px 10px; border-top: 3px solid var(--border); }
 .watch-tag { font-family: var(--pixel); font-size: .8rem; color: var(--rose); text-align: center; margin-top: 24px; }
 @media (max-width: 640px) { .watch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.watch-chip { display: inline-flex; align-items: center; gap: 8px; margin: 4px auto 14px; padding: 4px 10px 4px 4px; font-family: var(--voice); font-size: 1.15rem; color: var(--text); text-decoration: none; background: var(--inset); border: 2px solid var(--border-hi); }
-.watch-chip img { image-rendering: pixelated; background: #2a1748; }
-.watch-chip:hover { color: var(--text); border-color: #8a5cf6; }
 .watch-ranks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-top: 20px; }
 .watch-ranks figure { margin: 0; }
 .watch-ranks figcaption { font-family: var(--pixel); font-size: .55rem; color: var(--muted); text-align: center; margin-top: 6px; text-transform: uppercase; }
@@ -819,4 +816,10 @@ main > section.wrap:first-child { margin-top: 24px; }
 .watch-ranks figure:last-child img { border-color: #8a5cf6; }
 .watch-ranks-cap { font-family: var(--voice); font-size: 1.35rem; text-align: center; margin: 8px 0 0; }
 .watch-tile figcaption b { display: block; font-family: var(--pixel); font-size: .55rem; font-weight: normal; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
-@media (max-width: 640px) { a.watch-chip { display: inline-flex; width: auto; max-width: calc(100% - 2 * var(--gutter)); font-size: 1rem; line-height: 1.1; padding: 3px 8px 3px 3px; } a.watch-chip img { width: 22px; height: 22px; } }
+
+/* The Crystal Watch line hangs off the Steam box as its footer, one piece. */
+.launch { display: inline-flex; flex-direction: column; margin: 0 0 26px; box-shadow: 3px 3px 0 #000; }
+.launch .steam-box { margin: 0; box-shadow: none; }
+.watch-chip { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 12px; font-family: var(--pixel); font-size: 9px; letter-spacing: .04em; text-transform: uppercase; color: var(--text); text-decoration: none; background: rgba(10,10,15,.85); border: 2px solid var(--gold); border-top: 2px solid var(--border-hi); margin-top: -2px; text-shadow: 1px 1px 0 #000; }
+.watch-chip img { image-rendering: pixelated; flex: none; }
+.watch-chip:hover { color: #b48cff; border-color: #8a5cf6; }

@@ -298,16 +298,66 @@
 
 /* Crystal Watch tease */
 (function () {
-  var big = document.querySelector('[data-cw-big]');
-  var name = document.querySelector('[data-cw-name]');
-  var tabs = document.querySelectorAll('[data-cw-rank]');
-  tabs.forEach(function (b) {
-    b.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.setAttribute('aria-selected', t === b ? 'true' : 'false'); });
-      if (big) { big.src = 'assets/art/maul/' + b.dataset.cwRank + '.png'; big.alt = b.getAttribute('aria-label'); }
-      if (name) name.textContent = b.getAttribute('aria-label');
-    });
+  var P = 'assets/art/maul/';
+  var TREE = [
+    ['Whirlwind', 'titan-cleave', 'void-vortex', 'inferno-spin'],
+    ['Fury Strikes', 'executioner', 'thousand-cuts', 'thunder-fist'],
+    ['War Cry', 'battle-hymn', 'bloodcall', 'the-scream'],
+    ['Earthquake', 'fissure', 'aftershock', 'molten-core'],
+    ['Relentless', 'bloodlust-engine', 'soul-siphon', 'undying-rage']
+  ];
+  var HEROES = [
+    { id: 'berserker', name: 'Zerker', diff: 'Hard', acc: '#9b5cff', fx: 'rage', glow: true,
+      line: 'A demon sealed in the blood. The seal is half open.',
+      skills: [['bw-bk-crash', 'Breach Fall'], ['bw-bk-whirl', 'Reaping Whirl'], ['bw-bk-dust', 'Blood Frenzy'], ['bw-bk-burst', 'Loosen the Seal', 1]],
+      ranks: true, tree: true },
+    { id: 'paladin', name: 'Paladin', diff: 'Easy', acc: '#f6eebc', fx: 'light',
+      line: 'A wall in plate.',
+      skills: [['cr-pl-brightfall', 'Hammer of Dawn'], ['cr-pl-vow', 'Lay on Hands'], ['cr-pl-shield', 'Tower Shield'], ['cr-pl-writ', 'Divine Shield', 1]] },
+    { id: 'goblin-king', name: 'Goblin King', diff: 'Medium', acc: '#f2c23a', fx: 'coins',
+      line: 'Gold first. Gold always.' },
+    { id: 'god-mage', name: 'Wizard', diff: 'Medium', acc: '#4ad8ae', fx: 'storm',
+      line: 'Too big for any tower.' }
+  ];
+  var roster = document.querySelector('[data-cw-roster]');
+  var detail = document.querySelector('[data-cw-detail]');
+  if (!roster || !detail) return;
+  function fx(kind) {
+    var n = kind === 'storm' ? 4 : kind === 'coins' ? 10 : 7, s = '';
+    for (var i = 0; i < n; i++) {
+      var left = 8 + (i * 84 / n) + (i % 2 ? 4 : 0);
+      s += kind === 'storm' ? '<i></i>' : '<i style="left:' + left + '%;animation-delay:' + ((i * 0.37) % 1.3).toFixed(2) + 's"></i>';
+    }
+    return '<span class="fx fx-' + kind + '">' + s + '</span>';
+  }
+  HEROES.forEach(function (h, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'cw-card'; b.setAttribute('role', 'tab');
+    b.style.setProperty('--acc', h.acc);
+    b.innerHTML = fx(h.fx) + '<img src="' + P + 'heroes/' + h.id + '-card.png" alt="">' +
+      (h.glow ? '<img class="cw-glow" src="' + P + 'heroes/' + h.id + '-card-glow.png" alt="">' : '') +
+      '<b>' + h.name + '</b><em>' + h.diff.toUpperCase() + '</em>';
+    b.addEventListener('click', function () { pick(i); });
+    b.addEventListener('mouseenter', function () { if (window.matchMedia('(hover: hover)').matches) pick(i); });
+    roster.appendChild(b);
   });
+  function skills(h) {
+    var list = h.skills || [[0, '?'], [0, '?'], [0, '?'], [0, '?', 1]];
+    return '<div class="cw-skills">' + list.map(function (s) {
+      return '<div class="cw-skill' + (s[2] ? ' ult' : '') + '">' + (s[0] ? '<img src="' + P + 'skills/' + s[0] + '.png" alt="">' : '<span class="q">?</span>') + '<span>' + s[1] + '</span></div>';
+    }).join('') + '</div>';
+  }
+  function pick(i) {
+    var h = HEROES[i];
+    roster.querySelectorAll('.cw-card').forEach(function (c, k) { c.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+    detail.style.setProperty('--acc', h.acc);
+    var html = '<h3>' + h.name + '</h3><p class="cw-line">' + h.line + '</p><h4>Skills</h4>' + skills(h);
+    if (h.ranks) html += '<h4>Knight</h4><div class="cw-ranks-row">' + ['recruit', 'squire', 'knight', 'berserker', 'god-berserker'].map(function (r) { return '<img src="' + P + 'rank-' + r + '.png" alt="">'; }).join('') + '</div>';
+    if (h.tree) html += '<h4>Cards</h4><div class="cw-tree">' + TREE.map(function (t) { return '<div><b>' + t[0] + '</b>' + t.slice(1).map(function (a) { return '<img src="' + P + 'picks/tf-' + a + '.png" alt="" title="' + a.replace(/-/g, ' ') + '">'; }).join('') + '</div>'; }).join('') + '</div>';
+    if (!h.skills) html = '<h3>' + h.name + '</h3><p class="cw-line">' + h.line + '</p><h4>Skills</h4>' + skills(h);
+    detail.innerHTML = html;
+  }
+  pick(0);
   var boss = document.querySelector('[data-cw-boss]');
   if (boss && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {

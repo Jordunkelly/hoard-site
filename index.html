@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -261,17 +261,8 @@
         <p class="cw-lede"><!-- sync:maul -->There's a maze under the hoard. Something keeps walking it. Bring towers.<!-- /sync:maul --></p>
       </div>
 
-      <div class="cw-hero reveal">
-        <img class="cw-hero-big" data-cw-big src="assets/art/maul/rank-god-berserker.png" alt="God Berserker">
-        <div class="cw-ranks" role="tablist" aria-label="Knight ranks">
-          <button type="button" role="tab" data-cw-rank="rank-recruit" aria-label="Recruit"><img src="assets/art/maul/rank-recruit.png" alt=""><span>I</span></button>
-          <button type="button" role="tab" data-cw-rank="rank-squire" aria-label="Squire"><img src="assets/art/maul/rank-squire.png" alt=""><span>II</span></button>
-          <button type="button" role="tab" data-cw-rank="rank-knight" aria-label="Knight"><img src="assets/art/maul/rank-knight.png" alt=""><span>III</span></button>
-          <button type="button" role="tab" data-cw-rank="rank-berserker" aria-label="Berserker"><img src="assets/art/maul/rank-berserker.png" alt=""><span>IV</span></button>
-          <button type="button" role="tab" data-cw-rank="rank-god-berserker" aria-label="God Berserker" aria-selected="true" class="is-god"><img src="assets/art/maul/rank-god-berserker.png" alt=""><span>V</span></button>
-        </div>
-        <p class="cw-rank-name" data-cw-name aria-live="polite">God Berserker</p>
-      </div>
+      <div class="cw-roster reveal" role="tablist" aria-label="Heroes" data-cw-roster></div>
+      <div class="cw-detail" data-cw-detail aria-live="polite"></div>
 
       <div class="cw-elites reveal">
         <figure><img src="assets/art/maul/goblin-chief.png" alt="" loading="lazy"><figcaption>Goblin Chief</figcaption></figure>
@@ -319,6 +310,6 @@
 </footer>
 
 <audio data-audio preload="none" loop></audio>
-<script src="site.js?v=6"></script>
+<script src="site.js?v=7"></script>
 </body>
 </html>

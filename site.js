@@ -295,3 +295,24 @@
     clips.forEach(function (v) { watch.observe(v); });
   }
 })();
+
+/* Crystal Watch tease */
+(function () {
+  var big = document.querySelector('[data-cw-big]');
+  var name = document.querySelector('[data-cw-name]');
+  var tabs = document.querySelectorAll('[data-cw-rank]');
+  tabs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', t === b ? 'true' : 'false'); });
+      if (big) { big.src = 'assets/art/maul/' + b.dataset.cwRank + '.png'; big.alt = b.getAttribute('aria-label'); }
+      if (name) name.textContent = b.getAttribute('aria-label');
+    });
+  });
+  var boss = document.querySelector('[data-cw-boss]');
+  if (boss && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { setTimeout(function () { boss.classList.add('lit'); }, 500); io.disconnect(); } });
+    }, { threshold: 0.6 });
+    io.observe(boss);
+  } else if (boss) { boss.classList.add('lit'); }
+})();

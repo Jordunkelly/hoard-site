@@ -798,6 +798,9 @@ main > section.wrap:first-child { margin-top: 24px; }
 .tag svg { width: 14px; height: 14px; flex: none; }
 
 /* Crystal Watch tease: pixel art shown at whole multiples, one cryptic line each. */
+/* The Crystal Watch line hangs off the Steam box as its footer, one piece. */
+.launch { display: inline-flex; flex-direction: column; margin: 0 0 26px; box-shadow: 3px 3px 0 #000; }
+.launch .steam-box { margin: 0; box-shadow: none; }
 .watch-chip { display: block; padding: 7px 12px; font-family: var(--pixel); font-size: 8px; letter-spacing: .3em; text-transform: uppercase; text-align: center; color: #6f4fb0; text-decoration: none; background: rgba(10,10,15,.85); border: 2px solid var(--gold); border-top: 2px solid var(--border-hi); margin-top: -2px; }
 .watch-chip:hover { color: #c9a8ff; text-shadow: 0 0 6px #8a5cf6; }
 

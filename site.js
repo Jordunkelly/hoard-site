@@ -296,67 +296,106 @@
   }
 })();
 
-/* Crystal Watch tease */
+/* Crystal Watch tease: the game's own hero select, ported */
 (function () {
+  var D = {"heroes":[{"id":"berserker","name":"Zerker","pitch":"Bloodsworn. A demon sealed in the blood. The seal is half open.","playable":true,"shown":false,"skills":[{"id":"bw-bk-crash","name":"Breach Fall","kind":"basic","target":"none","text":"He jumps. He lands. The ground breaks, and so does whoever was standing on it."},{"id":"bw-bk-whirl","name":"Reaping Whirl","kind":"basic","target":"none","text":"He spins with the blade out. Close enough to bite him is close enough to be sliced. Repeatedly."},{"id":"bw-bk-dust","name":"Blood Frenzy","kind":"basic","target":"passive","text":"His blood hangs round him in a red mist. Towers that breathe it hit harder, and his own blows go for the neck, sometimes two necks."},{"id":"bw-bk-burst","name":"Loosen the Seal","kind":"ultimate","target":"unit","text":"He lets the demon out on one creep: one blow with everything in it, then faster, harder swings. He forgets to guard. Nobody tells him."}],"towers":[{"id":"bw-knight","name":"Knight","ranks":5,"tiers":["Recruit","Squire","Knight","Berserker","God Berserker"],"skills":[{"name":"Whirlwind","drawn":true,"builds":["Storm","Crit","Bleed","Void"],"pieces":false,"transforms":[{"name":"Titan's Cleave","art":"tf-titan-cleave"},{"name":"Void Vortex","art":"tf-void-vortex"},{"name":"Inferno Spin","art":"tf-inferno-spin"}]},{"name":"Fury Strikes","drawn":false,"builds":["Precision","Butcher","Bleed","Storm"],"pieces":false,"transforms":[{"name":"Executioner","art":"tf-executioner"},{"name":"Thousand Cuts","art":"tf-thousand-cuts"},{"name":"Thunder Fist","art":"tf-thunder-fist"}]},{"name":"War Cry","drawn":false,"builds":["Hymn","Rally","Terror","Blood"],"pieces":false,"transforms":[{"name":"Battle Hymn","art":"tf-battle-hymn"},{"name":"Bloodcall","art":"tf-bloodcall"},{"name":"The Scream","art":"tf-the-scream"}]},{"name":"Earthquake","drawn":false,"builds":["Fault","Stun","Fire","Echo"],"pieces":false,"transforms":[{"name":"Fissure","art":"tf-fissure"},{"name":"Aftershock","art":"tf-aftershock"},{"name":"Molten Core","art":"tf-molten-core"}]},{"name":"Relentless","drawn":false,"builds":["Shape","Target","Feed"],"pieces":true,"transforms":[{"name":"Bloodlust Engine","art":"tf-bloodlust-engine"},{"name":"Soul Siphon","art":"tf-soul-siphon"},{"name":"Undying Rage","art":"tf-undying-rage"}]}]}],"coming":[{"id":"bw-chain-hook","name":"Chain Hook","ranks":0,"skills":[{"name":"Hook","builds":[],"transforms":[]}]}],"w":28,"h":25},{"id":"paladin","name":"Paladin","pitch":"A wall in plate. He mends his own wounds, lifts every tower standing near him, and stops a pack cold with the hammer.","playable":false,"shown":true,"skills":[{"id":"cr-pl-brightfall","name":"Hammer of Dawn","kind":"basic","target":"point","text":"He throws the hammer up and the heavens throw it back. Whatever it lands on stands very still for a while."},{"id":"cr-pl-vow","name":"Lay on Hands","kind":"basic","target":"none","text":"He kneels and the ground goes holy. Standing there, he mends, and the towers round him shoot faster."},{"id":"cr-pl-shield","name":"Tower Shield","kind":"basic","target":"passive","text":"A shield taller than his ego. Creeps that hit it forget where they were going, and towers near him shoot faster and further."},{"id":"cr-pl-writ","name":"Divine Shield","kind":"ultimate","target":"none","text":"For a few breaths nothing can touch him, and his light strips the armour off every creep nearby. Very holy. Very rude."}],"towers":[],"coming":[],"w":24,"h":26},{"id":"goblin-king","name":"Goblin King","pitch":"Gold first, gold always. He bends the run until the towers all but buy themselves, and spends it faster than anyone can count.","playable":false,"shown":false,"skills":null,"towers":[],"coming":[],"w":21,"h":25},{"id":"god-mage","name":"Wizard","pitch":"Fire from the sky and lightning between the packs. Whole waves come apart under spells too big for any tower.","playable":false,"shown":false,"skills":null,"towers":[],"coming":[],"w":20,"h":25}],"tree":{"name":"Whirlwind","text":"Spins the blade; every creep in reach takes the blow.","rings":["Recruit","Knight","Berserker","God Berserker"],"nodes":[{"id":"wh-core","name":"Whirlwind","text":"Spins the blade; every creep in reach takes the blow.","kind":"core","max":1,"x":500,"y":320,"art":"kn-cyclone"},{"id":"wh-quick","name":"Quick Spin","text":"Faster spins.","kind":"minor","max":5,"ring":1,"x":500,"y":228,"needs":{"node":"wh-core","points":1},"build":"wind","art":"speed"},{"id":"wh-gale","name":"Gale","text":"The spin knocks creeps back.","kind":"minor","max":5,"ring":2,"x":437,"y":149,"needs":{"node":"wh-quick","points":2},"build":"wind","art":"stun"},{"id":"wh-reach","name":"Long Reach","text":"Longer spin reach.","kind":"minor","max":3,"ring":2,"x":563,"y":149,"needs":{"node":"wh-quick","points":2},"build":"wind","art":"range"},{"id":"wh-cyclone","name":"Cyclone","text":"Never stops spinning while anything is in reach: smaller hits, no pause.","kind":"notable","max":1,"ring":2,"x":406,"y":100,"needs":{"node":"wh-gale","points":3},"build":"wind","art":"kn-second-wind"},{"id":"wh-wide","name":"Wide Arc","text":"An outer ring of blades turns past reach.","kind":"notable","max":1,"ring":2,"x":594,"y":100,"needs":{"node":"wh-reach","points":2},"build":"wind","art":"kn-wide-arc"},{"id":"wh-keen","name":"Keen Edge","text":"Blows can crit for double; more crit chance each point.","kind":"minor","max":5,"ring":1,"x":647,"y":320,"needs":{"node":"wh-core","points":1},"build":"steel","art":"crit"},{"id":"wh-force","name":"Brutal Force","text":"Crits land harder.","kind":"minor","max":5,"ring":2,"x":769,"y":269,"needs":{"node":"wh-keen","points":2},"build":"steel","art":"dps"},{"id":"wh-finish","name":"Finishing Cut","text":"Harder on a creep near death.","kind":"minor","max":5,"ring":2,"x":769,"y":371,"needs":{"node":"wh-keen","points":2},"build":"steel","art":"skull"},{"id":"wh-greatsword","name":"Greatsword","text":"Slow, huge blows. The spin becomes a wide crescent that knocks creeps back, and a second point makes its crits heavier.","kind":"notable","max":2,"ring":2,"x":843,"y":242,"needs":{"node":"wh-force","points":3},"build":"steel","art":"kn-greatsword"},{"id":"wh-exec-edge","name":"Executioner's Edge","text":"A creep counts as dying at a higher share of life.","kind":"notable","max":3,"ring":2,"x":843,"y":398,"needs":{"node":"wh-finish","points":3},"build":"steel","art":"kn-executioner"},{"id":"wh-serrated","name":"Serrated","text":"Blows open bleeding wounds: each stack bleeds a tenth of the blow a second for 4s, up to 50 on a creep.","kind":"minor","max":5,"ring":1,"x":500,"y":412,"needs":{"node":"wh-core","points":1},"build":"blood","art":"bleed"},{"id":"wh-deep","name":"Deep Cuts","text":"Bleeds deal more damage.","kind":"minor","max":5,"ring":2,"x":563,"y":491,"needs":{"node":"wh-serrated","points":2},"build":"blood","art":"bleed"},{"id":"wh-veins","name":"Open Veins","text":"Bleeds last longer.","kind":"minor","max":5,"ring":2,"x":437,"y":491,"needs":{"node":"wh-serrated","points":2},"build":"blood","art":"bleed"},{"id":"wh-twin","name":"Twin Blades","text":"Two light blades: fast blows, and every one bleeds once more than it would have.","kind":"notable","max":2,"ring":2,"x":594,"y":540,"needs":{"node":"wh-deep","points":3},"build":"blood","art":"kn-twin-blades"},{"id":"wh-tide","name":"Red Tide","text":"Nearby towers attack faster, the nearer the faster.","kind":"notable","max":3,"ring":2,"x":406,"y":540,"needs":{"node":"wh-veins","points":3},"build":"blood","art":"kn-red-tide"},{"id":"wh-void","name":"Void Edge","text":"Part of the blow converts to void, which ignores armour type.","kind":"minor","max":5,"ring":1,"x":353,"y":320,"needs":{"node":"wh-core","points":1},"build":"abyss","art":"spells"},{"id":"wh-hollow","name":"Hollowing","text":"Hits hollow the creep so it takes more from everything: 2% a stack for 5s, each stack harder than the last, up to 15.","kind":"minor","max":5,"ring":2,"x":231,"y":371,"needs":{"node":"wh-void","points":2},"build":"abyss","art":"mark"},{"id":"wh-fear","name":"Fearsome","text":"Nearby creeps slow in fear.","kind":"minor","max":5,"ring":2,"x":231,"y":269,"needs":{"node":"wh-void","points":2},"build":"abyss","art":"slow"},{"id":"wh-ember","name":"Black Ember","text":"The ground under the tower burns while it spins.","kind":"notable","max":3,"ring":2,"x":157,"y":242,"needs":{"node":"wh-fear","points":3},"build":"abyss","art":"kn-black-ember"},{"id":"wh-eclipse","name":"Eclipse Brand","text":"Ailments leap to another creep when a creep dies carrying them.","kind":"notable","max":3,"ring":2,"x":157,"y":398,"needs":{"node":"wh-hollow","points":3},"build":"abyss","art":"kn-eclipse-brand"},{"id":"wh-titan","name":"Titan's Cleave","text":"The spin slows to one revolution every three seconds that hits for 2 times more, in a white crescent that shakes the field. Every creep it hits is stunned.","kind":"transform","max":1,"ring":3,"x":805,"y":129,"needs":{"node":"wh-core","points":1},"art":"tf-titan-cleave"},{"id":"wh-vortex","name":"Void Vortex","text":"The whole blow converts to void. The spin pulls every creep within twice reach toward the tower, each second in the pull hollows it, and on the third second the vortex collapses in a burst of all the Hollow it laid.","kind":"transform","max":1,"ring":3,"x":195,"y":129,"needs":{"node":"wh-core","points":1},"art":"tf-void-vortex"},{"id":"wh-inferno","name":"Inferno Spin","text":"All of the blow turns to fire. A ring of flame turns with the blade, every hit ignites, the ground under the spin burns, and a creep that dies ignited spreads its fire a cell.","kind":"transform","max":1,"ring":3,"x":195,"y":511,"needs":{"node":"wh-core","points":1},"art":"tf-inferno-spin"},{"id":"wh-bladestorm","name":"Bladestorm","text":"Blows land 1.4 times harder while spinning, and every spin throws a second spin outward at 20% of the first.","kind":"capstone","max":1,"ring":4,"x":842,"y":534,"needs":{"node":"wh-core","points":1},"art":"kn-bladestorm"}]}};
   var P = 'assets/art/maul/';
-  var TREE = [
-    ['Whirlwind', 'titan-cleave', 'void-vortex', 'inferno-spin'],
-    ['Fury Strikes', 'executioner', 'thousand-cuts', 'thunder-fist'],
-    ['War Cry', 'battle-hymn', 'bloodcall', 'the-scream'],
-    ['Earthquake', 'fissure', 'aftershock', 'molten-core'],
-    ['Relentless', 'bloodlust-engine', 'soul-siphon', 'undying-rage']
-  ];
-  var HEROES = [
-    { id: 'berserker', name: 'Zerker', diff: 'Hard', acc: '#9b5cff', fx: 'rage', glow: true,
-      line: 'A demon sealed in the blood. The seal is half open.',
-      skills: [['bw-bk-crash', 'Breach Fall'], ['bw-bk-whirl', 'Reaping Whirl'], ['bw-bk-dust', 'Blood Frenzy'], ['bw-bk-burst', 'Loosen the Seal', 1]],
-      ranks: true, tree: true },
-    { id: 'paladin', name: 'Paladin', diff: 'Easy', acc: '#f6eebc', fx: 'light',
-      line: 'A wall in plate.',
-      skills: [['cr-pl-brightfall', 'Hammer of Dawn'], ['cr-pl-vow', 'Lay on Hands'], ['cr-pl-shield', 'Tower Shield'], ['cr-pl-writ', 'Divine Shield', 1]] },
-    { id: 'goblin-king', name: 'Goblin King', diff: 'Medium', acc: '#f2c23a', fx: 'coins',
-      line: 'Gold first. Gold always.' },
-    { id: 'god-mage', name: 'Wizard', diff: 'Medium', acc: '#4ad8ae', fx: 'storm',
-      line: 'Too big for any tower.' }
-  ];
+  var LOOK = { berserker: ['#9161d6', 'rage'], paladin: ['#f7f0d4', 'light'], 'goblin-king': ['#f0c040', 'coins'], 'god-mage': ['#8eaad0', 'storm'] };
+  var BUILD = { steel: ['Crit', '#f0c040'], wind: ['Storm', '#3fb3a0'], blood: ['Bleed', '#b02a4a'], iron: ['Guard', '#5b86b3'], abyss: ['Void', '#9161d6'] };
+  var KEYS = ['Q', 'W', 'E', 'R'];
+  var STREAKS = [[30, 0], [40, .35], [47, .15], [55, .5], [62, .25], [70, .6]];
+  var BOLTS = [[24, 18, 2.4, -14], [66, 26, 2.9, 12], [44, 8, 3.4, -6]];
+  var COINS = [[8, 0], [22, .5], [37, .2], [51, .8], [66, .35], [80, .65], [90, .1], [30, 1], [60, 1.2], [14, 1.4]];
+  var EL = ['fire', 'ice', 'earth', 'air'];
   var roster = document.querySelector('[data-cw-roster]');
   var detail = document.querySelector('[data-cw-detail]');
   if (!roster || !detail) return;
-  function fx(kind) {
-    var n = kind === 'storm' ? 4 : kind === 'coins' ? 10 : 7, s = '';
-    for (var i = 0; i < n; i++) {
-      var left = 8 + (i * 84 / n) + (i % 2 ? 4 : 0);
-      s += kind === 'storm' ? '<i></i>' : '<i style="left:' + left + '%;animation-delay:' + ((i * 0.37) % 1.3).toFixed(2) + 's"></i>';
-    }
-    return '<span class="fx fx-' + kind + '">' + s + '</span>';
-  }
-  HEROES.forEach(function (h, i) {
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var timers = {};
+
+  function card(h, i) {
+    var look = LOOK[h.id], fx = look[1];
+    var shadow = !h.playable && !h.shown;
+    var back = '', front = '';
+    if (fx === 'rage') back = '<span class="hs-rage-rise"></span><span class="hs-ssj"><span class="hs-ssj-outer"></span><span class="hs-ssj-inner"></span></span>';
+    if (fx === 'light') back = '<span class="hs-aura"></span><span class="hs-rays"></span>';
+    if (fx === 'storm') back = '<span class="hs-orbit">' + EL.map(function (e) { return '<span class="hs-element hs-' + e + '"></span>'; }).join('') + '</span>';
+    if (fx === 'storm') front = EL.map(function (e) { return '<span class="hs-blast hs-' + e + '"></span>'; }).join('');
+    if (fx === 'light') front = '<span class="hs-beam"></span>' + COINS.map(function (c) { return '<span class="hs-mote" style="left:' + c[0] + '%;animation-delay:' + c[1] * 1.5 + 's"></span>'; }).join('');
+    if (fx === 'coins') front = COINS.map(function (c) { return '<span class="hs-coin" style="left:' + c[0] + '%;animation-delay:' + c[1] + 's"></span>'; }).join('');
+    if (fx === 'rage') front = STREAKS.map(function (s) { return '<span class="hs-streak" style="left:' + s[0] + '%;animation-delay:' + s[1] + 's"></span>'; }).join('') +
+      BOLTS.map(function (b) { return '<span class="hs-bolt" style="left:' + b[0] + '%;top:' + b[1] + '%;rotate:' + b[3] + 'deg;animation-delay:' + b[2] + 's"></span>'; }).join('');
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'cw-card'; b.setAttribute('role', 'tab');
-    b.style.setProperty('--acc', h.acc);
-    b.innerHTML = fx(h.fx) + '<img src="' + P + 'heroes/' + h.id + '-card.png" alt="">' +
-      (h.glow ? '<img class="cw-glow" src="' + P + 'heroes/' + h.id + '-card-glow.png" alt="">' : '') +
-      '<b>' + h.name + '</b><em>' + h.diff.toUpperCase() + '</em>';
+    b.type = 'button'; b.className = 'hs-card hs-' + fx; b.setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-label', h.name); b.dataset.shadow = shadow;
+    b.style.setProperty('--hs-accent', look[0]);
+    b.innerHTML = '<span class="hs-field"><span class="hs-fx">' + back + '</span>' +
+      '<span class="hs-art" style="aspect-ratio:' + h.w + '/' + h.h + ';width:' + Math.min(100, h.w * 3.4) + '%"><img data-f src="' + P + 'dolls/' + h.id + '-0.png" alt=""><img class="hs-glow" data-g src="' + P + 'dolls/' + h.id + '-0-glow.png" alt=""></span>' +
+      '<span class="hs-fx hs-front">' + front + '</span><span class="hs-num">' + (i + 1) + '</span>' +
+      (shadow ? '<span class="hs-soon">Coming soon</span>' : '') + '</span>' +
+      '<span class="hs-plate hs-plate-crystal"><span class="hs-name">' + esc(h.name) + '</span></span>';
+    function breathe(on) {
+      clearInterval(timers[h.id]);
+      var f = b.querySelector('[data-f]'), g = b.querySelector('[data-g]'), k = 0;
+      f.src = P + 'dolls/' + h.id + '-0.png'; g.src = P + 'dolls/' + h.id + '-0-glow.png';
+      if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timers[h.id] = setInterval(function () { k = 1 - k; f.src = P + 'dolls/' + h.id + '-' + k + '.png'; g.src = P + 'dolls/' + h.id + '-' + k + '-glow.png'; }, 600);
+    }
     b.addEventListener('click', function () { pick(i); });
-    b.addEventListener('mouseenter', function () { if (window.matchMedia('(hover: hover)').matches) pick(i); });
-    roster.appendChild(b);
-  });
-  function skills(h) {
-    var list = h.skills || [[0, '?'], [0, '?'], [0, '?'], [0, '?', 1]];
-    return '<div class="cw-skills">' + list.map(function (s) {
-      return '<div class="cw-skill' + (s[2] ? ' ult' : '') + '">' + (s[0] ? '<img src="' + P + 'skills/' + s[0] + '.png" alt="">' : '<span class="q">?</span>') + '<span>' + s[1] + '</span></div>';
-    }).join('') + '</div>';
+    b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { breathe(true); pick(i); } });
+    b.addEventListener('pointerleave', function () { if (b.getAttribute('aria-pressed') !== 'true') breathe(false); });
+    b._breathe = breathe;
+    return b;
   }
+
+  function skillRow(a, i) {
+    var kind = a.kind === 'ultimate' ? 'Ultimate' : a.target === 'passive' ? 'Passive' : 'Skill';
+    return '<li class="hd-skill' + (a.kind === 'ultimate' ? ' ult' : '') + (a.target === 'passive' ? ' passive' : '') + '"><span class="hd-icon"><img src="' + P + 'skills/' + a.id + '.png" alt=""></span>' +
+      '<span class="hd-sk"><span class="hd-skh"><span class="hd-key">' + KEYS[i] + '</span><b>' + esc(a.name) + '</b><span class="hd-kind">' + kind + '</span></span><span class="hd-txt">' + esc(a.text) + '</span></span></li>';
+  }
+  function skillLine(s) {
+    var tip = s.builds.length ? '<span class="hd-tip"><span class="hd-tiph">' + (s.pieces ? 'Pieces, one of each' : 'Builds') + '</span><span>' + s.builds.map(esc).join(' · ') + '</span>' +
+      (s.transforms.length ? '<span class="hd-tiph">Transforms, take one</span><span>' + s.transforms.map(function (t) { return esc(t.name); }).join(', ') + '</span>' : '') + '</span>'
+      : '<span class="hd-tip"><span>Its tree is still to be drawn.</span></span>';
+    return '<li class="hd-line" tabindex="0"' + (s.drawn ? ' data-drawn' : '') + '><span class="hd-ln"><b>' + esc(s.name) + '</b>' + (s.drawn ? '' : '<span class="hd-kind">Tree to come</span>') + '</span>' +
+      (s.transforms.length ? '<span class="hd-tfs">' + s.transforms.map(function (t) { return '<img src="' + P + 'picks/' + t.art + '.png" alt="" title="' + esc(t.name) + '">'; }).join('') + '</span>' : '') + tip + '</li>';
+  }
+  var RANKS = ['recruit', 'squire', 'knight', 'berserker', 'god-berserker'];
+  function towerTile(t) {
+    return '<li class="hd-tower"><span class="hd-th"><img class="hd-port" src="' + P + 'ranks/god-berserker.png" alt=""><span><b>' + esc(t.name) + '</b><span class="hd-kind">' + t.ranks + ' ranks</span></span></span>' +
+      '<span class="kp-climb">' + RANKS.map(function (r, k) { return '<span class="kp-step" style="--kp-rank:' + k + '"' + (k === 4 ? ' data-top' : '') + ' title="' + esc(t.tiers[k] || '') + '"><img src="' + P + 'ranks/' + r + '.png" alt=""></span>'; }).join('') + '</span>' +
+      '<ul class="hd-lines">' + t.skills.map(skillLine).join('') + '</ul></li>';
+  }
+  function comingTile(t) {
+    return '<li class="hd-tower hd-coming"><span class="hd-th"><span class="hd-q">?</span><span><b>' + esc(t.name) + '</b><span class="hd-kind">' + (t.ranks ? t.ranks + ' ranks' : 'No ranks') + '</span></span><span class="hd-pill">Coming soon</span></span>' +
+      '<ul class="hd-lines">' + t.skills.map(function (s) { return skillLine({ name: s.name, builds: s.builds, transforms: s.transforms, drawn: false }); }).join('') + '</ul></li>';
+  }
+  function treeSvg(t) {
+    var by = {}; t.nodes.forEach(function (n) { by[n.id] = n; });
+    var links = t.nodes.filter(function (n) { return n.needs && by[n.needs.node]; }).map(function (n) { var p = by[n.needs.node], c = n.build ? BUILD[n.build][1] : '#3d3550'; return '<line x1="' + p.x + '" y1="' + p.y + '" x2="' + n.x + '" y2="' + n.y + '" stroke="' + c + '" stroke-width="6" opacity=".55"/>'; }).join('');
+    var rings = [180, 330, 470].map(function (r) { return '<ellipse cx="500" cy="320" rx="' + r + '" ry="' + r * .64 + '" fill="none" stroke="#2a2438" stroke-width="3" stroke-dasharray="10 10"/>'; }).join('');
+    var nodes = t.nodes.map(function (n) {
+      var c = n.build ? BUILD[n.build][1] : '#ddc274', title = '<title>' + esc(n.name + ': ' + n.text) + '</title>';
+      if (n.kind === 'transform') return '<g>' + title + '<rect x="' + (n.x - 44) + '" y="' + (n.y - 44) + '" width="88" height="88" fill="#0c0b12" stroke="#9161d6" stroke-width="6"/><image href="' + P + 'picks/' + n.art + '.png" x="' + (n.x - 38) + '" y="' + (n.y - 38) + '" width="76" height="76" style="image-rendering:pixelated"/></g>';
+      if (n.kind === 'core') return '<g>' + title + '<circle cx="' + n.x + '" cy="' + n.y + '" r="50" fill="#1d1230" stroke="#ddc274" stroke-width="7"/><image href="' + P + 'skills/bw-bk-whirl.png" x="' + (n.x - 32) + '" y="' + (n.y - 32) + '" width="64" height="64" style="image-rendering:pixelated"/></g>';
+      if (n.kind === 'capstone') return '<g>' + title + '<rect x="' + (n.x - 40) + '" y="' + (n.y - 40) + '" width="80" height="80" transform="rotate(45 ' + n.x + ' ' + n.y + ')" fill="#2a1748" stroke="#ddc274" stroke-width="7"/></g>';
+      var r = n.kind === 'notable' ? 30 : 18;
+      return '<g>' + title + '<circle cx="' + n.x + '" cy="' + n.y + '" r="' + r + '" fill="#0c0b12" stroke="' + c + '" stroke-width="' + (n.kind === 'notable' ? 8 : 5) + '"/></g>';
+    }).join('');
+    var legend = Object.keys(BUILD).filter(function (k) { return t.nodes.some(function (n) { return n.build === k; }); }).map(function (k) { return '<span style="--c:' + BUILD[k][1] + '">' + BUILD[k][0] + '</span>'; }).join('');
+    return '<div class="hd-tree"><h3>' + esc(t.name) + ' tree</h3><svg viewBox="0 0 1000 640" role="img" aria-label="' + esc(t.name) + ' skill tree">' + rings + links + nodes + '</svg><div class="hd-legend">' + legend + '<span class="hd-tf">Transform</span></div></div>';
+  }
+
   function pick(i) {
-    var h = HEROES[i];
-    roster.querySelectorAll('.cw-card').forEach(function (c, k) { c.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-    detail.style.setProperty('--acc', h.acc);
-    var html = '<h3>' + h.name + '</h3><p class="cw-line">' + h.line + '</p><h4>Skills</h4>' + skills(h);
-    if (h.ranks) html += '<h4>Knight</h4><div class="cw-ranks-row">' + ['recruit', 'squire', 'knight', 'berserker', 'god-berserker'].map(function (r) { return '<img src="' + P + 'rank-' + r + '.png" alt="">'; }).join('') + '</div>';
-    if (h.tree) html += '<h4>Cards</h4><div class="cw-tree">' + TREE.map(function (t) { return '<div><b>' + t[0] + '</b>' + t.slice(1).map(function (a) { return '<img src="' + P + 'picks/tf-' + a + '.png" alt="" title="' + a.replace(/-/g, ' ') + '">'; }).join('') + '</div>'; }).join('') + '</div>';
-    if (!h.skills) html = '<h3>' + h.name + '</h3><p class="cw-line">' + h.line + '</p><h4>Skills</h4>' + skills(h);
-    detail.innerHTML = html;
+    var h = D.heroes[i];
+    var cards = roster.querySelectorAll('.hs-card');
+    cards.forEach(function (c, k) { c.setAttribute('aria-pressed', k === i ? 'true' : 'false'); c._breathe(k === i); });
+    var left = '<div class="hd-col"><h2>' + esc(h.name) + '</h2><p class="hd-pitch">' + esc(h.pitch) + '</p><h3>Skills</h3>' +
+      (h.skills && !(!h.playable && !h.shown) ? '<ul class="hd-skills">' + h.skills.map(skillRow).join('') + '</ul>' : '<p class="hd-soon">Coming soon</p>') + '</div>';
+    var right = '<div class="hd-col"><h3>Towers</h3>' + (h.towers.length ? '<ul class="hd-towers">' + h.towers.map(towerTile).join('') + h.coming.map(comingTile).join('') + '</ul>' : '<p class="hd-soon">Coming soon</p>') + '</div>';
+    detail.innerHTML = '<div class="hd-grid">' + left + right + '</div>' + (h.id === 'berserker' ? treeSvg(D.tree) : '');
   }
+  D.heroes.forEach(function (h, i) { roster.appendChild(card(h, i)); });
   pick(0);
   var boss = document.querySelector('[data-cw-boss]');
   if (boss && 'IntersectionObserver' in window) {

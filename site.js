@@ -1,6 +1,6 @@
 (function () {
   var RELEASES = 'https://api.github.com/repos/Jordunkelly/hoard-releases/releases/latest';
-  var INSTALLER = 'Hoard.Setup.exe';
+  var INSTALLER = 'Hoard-Setup.exe';
 
   // Colours are the app's own, from lib/built-in-themes.json, so a lair
   // picked here looks like the one you get.

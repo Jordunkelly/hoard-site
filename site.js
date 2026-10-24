@@ -183,11 +183,16 @@
       .then(function (rel) {
         if (!rel || !rel.tag_name) return;
         var asset = (rel.assets || []).filter(function (a) { return a.name === INSTALLER; })[0];
-        var bits = [rel.tag_name];
+        var bits = [];
         if (asset) bits.push(Math.round(asset.size / 1048576) + ' MB');
         bits.push('Windows only');
         document.querySelectorAll('[data-dl-meta]').forEach(function (el) {
-          el.textContent = bits.join(' · ');
+          var tag = document.createElement('span');
+          tag.className = 'ver-tag';
+          tag.textContent = rel.tag_name;
+          el.textContent = '';
+          el.appendChild(tag);
+          el.appendChild(document.createTextNode(' · ' + bits.join(' · ')));
         });
       })
       .catch(function () {});

@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -93,10 +93,37 @@
     <p class="dl-meta" data-dl-meta>Windows only. It updates itself. Private testing, so it asks for your key.</p>
     <p class="smartscreen">Windows might clutch its pearls because the installer isn't signed yet. Hit <b>More info</b>, then <b>Run anyway</b>.</p>
   </div>
-  <a class="scroll-cue" href="#gibbles" aria-label="Read on">&#9660;</a>
+  <a class="scroll-cue" href="#watch" aria-label="Read on">&#9660;</a>
 </header>
 
 <main>
+
+  <section class="watch" id="watch" aria-labelledby="watch-h">
+    <div class="wrap">
+      <div class="cw-intro reveal">
+        <div class="cw-crystal" aria-hidden="true"><i></i></div>
+        <h2 id="watch-h">Crystal Watch.</h2>
+        <p class="cw-lede"><!-- sync:maul -->There's a maze under the hoard. Something keeps walking it. Bring towers.<!-- /sync:maul --></p>
+      </div>
+
+      <div class="cw-roster reveal" role="tablist" aria-label="Heroes" data-cw-roster></div>
+      <div class="cw-detail" data-cw-detail aria-live="polite"></div>
+
+      <div class="cw-elites reveal">
+        <figure><img src="assets/art/maul/goblin-chief.png" alt="" loading="lazy"><figcaption>Goblin Chief</figcaption></figure>
+        <figure><img src="assets/art/maul/harpy-matron.png" alt="" loading="lazy"><figcaption>Harpy Matron</figcaption></figure>
+        <figure><img src="assets/art/maul/orc-warlord.png" alt="" loading="lazy"><figcaption>Warlord</figcaption></figure>
+        <figure><img src="assets/art/maul/phoenix.png" alt="" loading="lazy"><figcaption>Phoenix</figcaption></figure>
+      </div>
+
+      <figure class="cw-boss reveal" data-cw-boss>
+        <img src="assets/art/maul/lich-emperor.png" alt="Lich Emperor" loading="lazy">
+        <figcaption><b>Lich Emperor</b>The dead keep a king.</figcaption>
+      </figure>
+
+      <p class="cw-tag reveal">Thirty waves.</p>
+    </div>
+  </section>
 
   <section class="wrap" id="gibbles">
     <div class="dialog reveal">
@@ -158,47 +185,6 @@
     </div>
   </section>
 
-  <section class="reel" id="reel" aria-labelledby="reel-h">
-    <div class="wrap">
-      <h2 id="reel-h" class="reveal">A Little Peek</h2>
-      <p class="speech-text reel-lede reveal">Four trips behind the vault door. Fake gold, real code. Steal them. I'm not your lawyer.</p>
-      <div class="clips">
-        <figure class="clip reveal">
-          <video src="assets/clips/hoard-onboarding.mp4" poster="assets/clips/hoard-onboarding.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="Setting up Hoard: choosing a mailbox and typing an app password"></video>
-          <figcaption>
-            <div class="clip-head"><b>Setup</b><a href="assets/clips/hoard-onboarding.mp4" download="hoard-onboarding.mp4">Download <em>2.1 MB</em></a></div>
-            <p class="clip-line">Pick a mailbox. That's most of setup. Yes, really.</p>
-            <p class="clip-what">Pick Gmail or Proton, add your app password, and Hoard starts reading the bank alerts already sitting in your inbox. No account to make. Nothing to sign up for.</p>
-          </figcaption>
-        </figure>
-        <figure class="clip reveal">
-          <video src="assets/clips/hoard-ledger.mp4" poster="assets/clips/hoard-ledger.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="The Ledger: bills sorted by category, then filtered to what is due soon"></video>
-          <figcaption>
-            <div class="clip-head"><b>The Ledger</b><a href="assets/clips/hoard-ledger.mp4" download="hoard-ledger.mp4">Download <em>0.4 MB</em></a></div>
-            <p class="clip-line">Every bill, sorted however you like. I'll pretend to care.</p>
-            <p class="clip-what">Every bill and payday in one list, with the account each one comes out of. Sort by category, amount or due date, or narrow it to what is due in the next week or two.</p>
-          </figcaption>
-        </figure>
-        <figure class="clip reveal">
-          <video src="assets/clips/hoard-forge.mp4" poster="assets/clips/hoard-forge.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="The Forge: teaching Hoard a bank alert it could not read, then it reads the rest"></video>
-          <figcaption>
-            <div class="clip-head"><b>The Forge</b><a href="assets/clips/hoard-forge.mp4" download="hoard-forge.mp4">Download <em>0.7 MB</em></a></div>
-            <p class="clip-line">Show me one letter that stumps me. I learn the rest.</p>
-            <p class="clip-what">When an alert shows up that Hoard cannot read, you show it once: the amount, who got paid, which account. It learns that bank's layout and reads the rest of its alerts by itself.</p>
-          </figcaption>
-        </figure>
-        <figure class="clip reveal">
-          <video src="assets/clips/hoard-vaults.mp4" poster="assets/clips/hoard-vaults.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="The Vaults: a balance alert arrives and the checking balance updates"></video>
-          <figcaption>
-            <div class="clip-head"><b>The Vaults</b><a href="assets/clips/hoard-vaults.mp4" download="hoard-vaults.mp4">Download <em>0.3 MB</em></a></div>
-            <p class="clip-line">A bank alert lands. The vault moves. You lift nothing.</p>
-            <p class="clip-what">Every account and loan in one place. When your bank emails a balance alert, Hoard reads it and the vault updates on its own, with the history underneath.</p>
-          </figcaption>
-        </figure>
-      <p class="reel-note reveal">A demo vault. Every name and number in these is made up, so don't bother.</p>
-    </div>
-  </section>
-
   <section class="lairs" id="lairs" aria-labelledby="lairs-h">
     <div class="wrap">
       <h2 id="lairs-h" class="reveal">Pick your lair.</h2>
@@ -253,33 +239,6 @@
     </div>
   </section>
 
-  <section class="watch" id="watch" aria-labelledby="watch-h">
-    <div class="wrap">
-      <div class="cw-intro reveal">
-        <div class="cw-crystal" aria-hidden="true"><i></i></div>
-        <h2 id="watch-h">Crystal Watch.</h2>
-        <p class="cw-lede"><!-- sync:maul -->There's a maze under the hoard. Something keeps walking it. Bring towers.<!-- /sync:maul --></p>
-      </div>
-
-      <div class="cw-roster reveal" role="tablist" aria-label="Heroes" data-cw-roster></div>
-      <div class="cw-detail" data-cw-detail aria-live="polite"></div>
-
-      <div class="cw-elites reveal">
-        <figure><img src="assets/art/maul/goblin-chief.png" alt="" loading="lazy"><figcaption>Goblin Chief</figcaption></figure>
-        <figure><img src="assets/art/maul/harpy-matron.png" alt="" loading="lazy"><figcaption>Harpy Matron</figcaption></figure>
-        <figure><img src="assets/art/maul/orc-warlord.png" alt="" loading="lazy"><figcaption>Warlord</figcaption></figure>
-        <figure><img src="assets/art/maul/phoenix.png" alt="" loading="lazy"><figcaption>Phoenix</figcaption></figure>
-      </div>
-
-      <figure class="cw-boss reveal" data-cw-boss>
-        <img src="assets/art/maul/lich-emperor.png" alt="Lich Emperor" loading="lazy">
-        <figcaption><b>Lich Emperor</b>The dead keep a king.</figcaption>
-      </figure>
-
-      <p class="cw-tag reveal">Thirty waves.</p>
-    </div>
-  </section>
-
   <section class="wrap">
     <div class="finale reveal">
       <img class="clerk" src="assets/art/clerk.webp" alt="A goblin bank clerk throwing gold in the air" width="320" height="320" loading="lazy">
@@ -310,6 +269,6 @@
 </footer>
 
 <audio data-audio preload="none" loop></audio>
-<script src="site.js?v=10"></script>
+<script src="site.js?v=11"></script>
 </body>
 </html>

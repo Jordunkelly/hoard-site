@@ -320,16 +320,117 @@
   if (saved === 'game' || saved === 'both') choose(saved, false);
 })();
 
-/* Gibbles at the doors. He says one thing, once, when a door is picked, and
-   stays put: no nagging, no hover chatter, no popping in and out. */
+/* Gibbles, support goblin. A chat widget that answers from a few canned
+   lines in the page. Nothing typed is sent anywhere or kept. */
 (function () {
-  var toast = document.querySelector('[data-gib]');
-  if (!toast) return;
-  var say = toast.querySelector('[data-gib-say]');
+  var root = document.querySelector('[data-gchat]');
+  if (!root) return;
+  var panel = root.querySelector('[data-gchat-panel]');
+  var log = root.querySelector('[data-gchat-log]');
+  var chips = root.querySelector('[data-gchat-chips]');
+  var form = root.querySelector('[data-gchat-form]');
+  var input = root.querySelector('[data-gchat-input]');
+  var badge = root.querySelector('[data-gchat-badge]');
+  var tease = root.querySelector('[data-gchat-tease]');
   var sticker = document.querySelector('[data-gib-sticker]');
-  var LINE = {
-    game: 'Go play. I will be down here, guarding your money from you.',
-    both: 'Finally. Someone who wants it all. Here is your quest.'
+  var unread = 1, busy = false, opened = false;
+
+  var TOPICS = [
+    { k: /(safe|data|privacy|private|secure|hack|spy|track|cloud|server)/, a: [
+      'Your data stays on your PC. I do not have a server. I barely have a desk.',
+      'Nothing leaves your machine but your own mail fetch and an update check. I checked. Twice. Grudgingly.' ] },
+    { k: /(game|maul|crystal|tower|defen[cs]e|play|monster|boss|wave)/, a: [
+      'Crystal Watch. A maze tower defense under the hoard. Thirty waves. You will die a lot. I will laugh a lot.',
+      'Yes there is a game. No it is not easy. Build towers. Keep the crystal alive. Stop asking me.' ] },
+    { k: /(steam|when|release|launch|out|date)/, a: [
+      'Steam, aiming for Christmas 2026. Aiming. Not promising. Goblins do not do promises.',
+      'Christmas 2026, on Steam. Ask again and it moves to Easter.' ] },
+    { k: /(price|cost|free|pay|money|cheap|how much)/, a: [
+      'Testers get a free Steam key at launch. Everyone else will pay. I like gold. Obviously.',
+      'Free while you test it. After that, I take your gold. It is in my name.' ] },
+    { k: /(mac|apple|phone|mobile|android|iphone|linux)/, a: [
+      'Windows only. Mac bros, skill issue. Phone is coming. Not today. Sit at your PC.' ] },
+    { k: /(what is|what's|hoard|budget|finance|bank|how does|how do)/, a: [
+      'Hoard reads your bank alert emails and files every account in one place. On your PC. Then it judges you.',
+      'It is a budget app that is secretly a goblin RPG. I am the goblin. Hello. Goodbye.' ] },
+    { k: /(gmail|proton|mail|email|imap|password)/, a: [
+      'Gmail with an app password, or Proton through Bridge. Your password goes to your mailbox, not me. I do not want it.' ] },
+    { k: /(human|agent|manager|person|real|supervisor|speak to)/, a: [
+      'There is no human. There is only me. I am the manager. I am also the janitor.',
+      'Transferring you to a human. Please hold. Forever.' ] },
+    { k: /(thank|thanks|thx|ty|cool|nice|love)/, a: [
+      'Do not thank me. It encourages you.', 'Yeah, yeah. Go download it.' ] },
+    { k: /(hi|hello|hey|sup|yo)\b/, a: [ 'Hi. What. Quickly.', 'Yes? I was counting.' ] },
+    { k: /(bug|broke|crash|error|issue)/, a: [
+      'A bug? In MY hoard? Screenshot it for the group chat. Testers get a Steam key for the crime.' ] }
+  ];
+  var MEH = [
+    'I did not understand that and I am choosing not to try.',
+    'Wow. Riveting. Anything else.',
+    'I am an AI assistant. Artificially Irritated.',
+    'Have you tried turning yourself off and on again.',
+    'Your call is important to us. It is not important to me.',
+    'Try the buttons. They are smarter than both of us.'
+  ];
+  var CHIPS = ['What is Hoard?', 'Is my data safe?', 'Is there a game?', 'When is Steam?', 'Talk to a human'];
+
+  function add(cls, text) {
+    var li = document.createElement('li');
+    li.className = cls;
+    li.textContent = text;
+    log.appendChild(li);
+    log.scrollTop = log.scrollHeight;
+    return li;
+  }
+  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+  function reply(text) {
+    busy = true;
+    var t = add('bot typing', 'Gibbles is typing. Reluctantly.');
+    setTimeout(function () {
+      t.className = 'bot';
+      t.textContent = text;
+      log.scrollTop = log.scrollHeight;
+      busy = false;
+      if (panel.hidden) { unread += 1; badge.textContent = String(unread); badge.hidden = false; }
+    }, 700 + Math.min(text.length * 12, 900));
+  }
+  function answer(q) {
+    var s = q.toLowerCase();
+    for (var i = 0; i < TOPICS.length; i++) if (TOPICS[i].k.test(s)) return pick(TOPICS[i].a);
+    return pick(MEH);
+  }
+  function ask(q) {
+    q = (q || '').trim();
+    if (!q || busy) return;
+    add('me', q);
+    reply(answer(q));
+  }
+  function open() {
+    panel.hidden = false;
+    tease.hidden = true;
+    badge.hidden = true;
+    unread = 0;
+    if (!opened) {
+      opened = true;
+      add('bot', 'Hi. I am Gibbles, your AI assistant. I am not an AI. I am a goblin. What do you want.');
+    }
+    try { input.focus({ preventScroll: true }); } catch (e) {}
+  }
+  CHIPS.forEach(function (c) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = c;
+    b.addEventListener('click', function () { ask(c); });
+    chips.appendChild(b);
+  });
+  root.querySelector('[data-gchat-open]').addEventListener('click', function () { if (panel.hidden) open(); else panel.hidden = true; });
+  root.querySelector('[data-gchat-close]').addEventListener('click', function () { panel.hidden = true; });
+  form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); input.value = ''; });
+
+  // The doors: he has opinions about those too.
+  var DOOR = {
+    game: 'You picked just the game. Bold. I will be down here guarding your money from you.',
+    both: 'You picked both. Finally, someone with ambition. Here is your quest.'
   };
   document.querySelectorAll('[data-door]').forEach(function (d) {
     var which = d.getAttribute('data-door');
@@ -338,8 +439,9 @@
         sticker.hidden = which !== 'game';
         if (which === 'game') { sticker.style.animation = 'none'; void sticker.offsetWidth; sticker.style.animation = ''; }
       }
-      say.textContent = LINE[which];
-      toast.hidden = false;
+      if (!opened) { opened = true; add('bot', 'Hi. I am Gibbles, your AI assistant. I am not an AI. I am a goblin.'); }
+      reply(DOOR[which]);
+      tease.textContent = 'I have thoughts.';
     });
   });
 })();

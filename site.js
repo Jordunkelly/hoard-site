@@ -307,6 +307,13 @@
   var doors = document.querySelectorAll('[data-door]');
   function choose(path, scroll) {
     document.body.setAttribute('data-path', path);
+    var watch = document.getElementById('watch');
+    var steam = document.getElementById('steam');
+    var quest = document.getElementById('quest');
+    if (watch && steam && quest) {
+      if (path === 'both') steam.parentNode.insertBefore(watch, steam);
+      else quest.parentNode.insertBefore(watch, quest.nextSibling);
+    }
     doors.forEach(function (d) { d.setAttribute('aria-pressed', String(d.getAttribute('data-door') === path)); });
     try { localStorage.setItem('hoard-door', path); } catch (e) {}
     if (scroll) {
@@ -358,9 +365,35 @@
     { k: /(human|agent|manager|person|real|supervisor|speak to)/, a: [
       'There is no human. There is only me. I am the manager. I am also the janitor.',
       'Transferring you to a human. Please hold. Forever.' ] },
-    { k: /(thank|thanks|thx|ty|cool|nice|love)/, a: [
+    { k: /\b(thanks?|thx|ty|cool|nice)\b/, a: [
       'Do not thank me. It encourages you.', 'Yeah, yeah. Go download it.' ] },
-    { k: /(hi|hello|hey|sup|yo)\b/, a: [ 'Hi. What. Quickly.', 'Yes? I was counting.' ] },
+    { k: /(who are you|your name|are you real|are you (an )?ai|what are you|gibbles)/, a: [
+      'I am Gibbles. Goblin. Vault clerk. Four hundred years old. Not an AI. An AI would be nicer.',
+      'Gibbles. I count the hoard. I have counted it eleven million times. It is always correct.' ] },
+    { k: /(pretty|cute|handsome|beautiful|ugly|hot)\b/, a: [
+      'Am I pretty? Do not answer that. I can see your face from here.',
+      'I have a monocle, a vest and a bad attitude. I am the whole package.' ] },
+    { k: /(love you|marry|date me|girlfriend|boyfriend|kiss)/, a: [
+      'No. I love gold. You are not gold.', 'I am married to the hoard. It is a happy marriage. It never talks.' ] },
+    { k: /(joke|funny|make me laugh|laugh)/, a: [
+      'Your budget. That is the joke.', 'A man walks into a bank. The bank sells his data. Not here though. Ha. Ha.',
+      'Knock knock. Who is there. Your rent. Rent who. Rent is due.' ] },
+    { k: /(stupid|dumb|useless|bad bot|hate you|suck|trash)/, a: [
+      'And yet here you are. Talking to me.', 'I have been insulted by kings. You are not a king.',
+      'Feedback received. Feedback filed. Feedback ignored.' ] },
+    { k: /(crystal watch|tower|maze|wave|lich|ossarch|boss)/, a: [
+      'Thirty waves. A crystal. A king at the end who screams in your face. I hear him at night.',
+      'Build a maze. A real one. Not one straight line. I watched you. I judged you.' ] },
+    { k: /(theme|lair|music|tune)/, a: [
+      'Five lairs. You start in one. You earn the rest. Like everything in life. Except the debt.' ] },
+    { k: /(goblin|cameo|sticker|slay)/, a: [
+      'The other goblins are my cousins. We do not talk about Kevin.', 'Slay is my cousin. She is insufferable. She is right.' ] },
+    { k: /(budget|save|saving|spend|money|broke|rich)/, a: [
+      'Hoard counts every coin you get alerts for, files it, and tells you what you can spend. Then I tell you not to.',
+      'Rations, buckets, a fire that grows when you behave. You will not behave. The fire will be small.' ] },
+    { k: /(sleep|tired|bored|sad|lonely)/, a: [
+      'Go to bed. The hoard will still be here. I will still be here. I never sleep. I never leave.' ] },
+    { k: /\b(hi|hello|hey|sup|yo)\b/, a: [ 'Hi. What. Quickly.', 'Yes? I was counting.' ] },
     { k: /(bug|broke|crash|error|issue)/, a: [
       'A bug? In MY hoard? Screenshot it for the group chat. Testers get a Steam key for the crime.' ] }
   ];
@@ -370,7 +403,12 @@
     'I am an AI assistant. Artificially Irritated.',
     'Have you tried turning yourself off and on again.',
     'Your call is important to us. It is not important to me.',
-    'Try the buttons. They are smarter than both of us.'
+    'Try the buttons. They are smarter than both of us.',
+    'Interesting. Wrong, but interesting.',
+    'I am going to pretend you did not type that.',
+    'Let me check with my manager. I am the manager. The answer is no.',
+    'That is above my pay grade. I am not paid.',
+    'Error 418. I am a goblin, not a teapot. Close enough.'
   ];
   var CHIPS = ['What is Hoard?', 'Is my data safe?', 'Is there a game?', 'When is Steam?', 'Talk to a human'];
 
@@ -394,21 +432,43 @@
       if (panel.hidden) { unread += 1; badge.textContent = String(unread); badge.hidden = false; }
     }, 700 + Math.min(text.length * 12, 900));
   }
+  var RARE = [
+    'Fun fact: I have never once been wrong. I checked my own work. It was correct.',
+    'Psst. The crystal is not a crystal. It is a very large gem. Do not tell it I said that.',
+    'Sometimes I count the hoard backwards to feel something.',
+    'If you are reading this, you found the rare line. Your prize is nothing. Congratulations.'
+  ];
+  var asked = {};
   function answer(q) {
-    var s = q.toLowerCase();
+    var s = q.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').trim();
+    if (Math.random() < 0.04) return pick(RARE);
+    if (asked[s]) { asked[s] += 1; return asked[s] > 2 ? 'Third time. Same answer. I am a goblin, not a slot machine.' : 'You asked that. I answered. I am still right.'; }
+    asked[s] = 1;
     for (var i = 0; i < TOPICS.length; i++) if (TOPICS[i].k.test(s)) return pick(TOPICS[i].a);
     return pick(MEH);
+  }
+  function greeting() {
+    var h = new Date().getHours();
+    var when = h < 5 ? 'It is the middle of the night. Why are you here. Why am I here.'
+      : h < 12 ? 'Morning. I have been up since the dawn of time. Literally.'
+      : h < 18 ? 'Afternoon. Peak goblin hours. I am at my most irritable.'
+      : 'Evening. The hoard glows nicely at night. Do not touch it.';
+    return when + ' I am Gibbles, your AI assistant. I am not an AI. I am a goblin. What do you want.';
   }
   // Asking for a human puts you on hold. Every time you ask, you lose a place.
   var caller = 0;
   function hold() {
     var lines;
+    function fmt(n) { return n.toLocaleString('en-US'); }
     if (!caller) {
-      caller = 4813;
-      lines = ['Transferring you to a human. Please hold.', 'You are caller 4,812.', 'You are now caller 4,813. Someone cut in. It was me.', 'Estimated wait: Christmas.'];
-    } else {
+      caller = 1200 + Math.floor(Math.random() * 96800);
+      lines = ['Transferring you to a human. Please hold.', 'You are caller ' + fmt(caller) + '.', 'You are now caller ' + fmt(caller + 1) + '. Someone cut in. It was me.', 'Estimated wait: Christmas.'];
       caller += 1;
-      lines = ['Back on hold. You are caller ' + caller.toLocaleString('en-US') + '. You are going the wrong way.'];
+    } else {
+      caller += 1 + Math.floor(Math.random() * 50);
+      lines = [pick(['Back on hold. You are caller ' + fmt(caller) + '. You are going the wrong way.',
+        'You are now caller ' + fmt(caller) + '. A dog cut in. He had an appointment.',
+        'Caller ' + fmt(caller) + '. Your patience has been noted and discarded.'])];
     }
     var i = 0;
     (function next() {
@@ -440,7 +500,7 @@
     unread = 0;
     if (!opened) {
       opened = true;
-      add('bot', 'Hi. I am Gibbles, your AI assistant. I am not an AI. I am a goblin. What do you want.');
+      add('bot', greeting());
     }
     try { input.focus({ preventScroll: true }); } catch (e) {}
   }

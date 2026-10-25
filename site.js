@@ -399,10 +399,38 @@
     for (var i = 0; i < TOPICS.length; i++) if (TOPICS[i].k.test(s)) return pick(TOPICS[i].a);
     return pick(MEH);
   }
+  // Asking for a human puts you on hold. Every time you ask, you lose a place.
+  var caller = 0;
+  function hold() {
+    var lines;
+    if (!caller) {
+      caller = 4813;
+      lines = ['Transferring you to a human. Please hold.', 'You are caller 4,812.', 'You are now caller 4,813. Someone cut in. It was me.', 'Estimated wait: Christmas.'];
+    } else {
+      caller += 1;
+      lines = ['Back on hold. You are caller ' + caller.toLocaleString('en-US') + '. You are going the wrong way.'];
+    }
+    var i = 0;
+    (function next() {
+      if (i >= lines.length) return;
+      busy = true;
+      var t = add('bot typing', 'Gibbles is typing. Reluctantly.');
+      var line = lines[i++];
+      setTimeout(function () {
+        t.className = 'bot';
+        t.textContent = line;
+        log.scrollTop = log.scrollHeight;
+        busy = false;
+        if (panel.hidden) { unread += 1; badge.textContent = String(unread); badge.hidden = false; }
+        setTimeout(next, i === 2 ? 2600 : 500);
+      }, 900);
+    })();
+  }
   function ask(q) {
     q = (q || '').trim();
     if (!q || busy) return;
     add('me', q);
+    if (/(human|agent|manager|person|real|supervisor|speak to)/.test(q.toLowerCase())) { hold(); return; }
     reply(answer(q));
   }
   function open() {

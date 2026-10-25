@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=13">
+<link rel="stylesheet" href="style.css?v=14">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -93,12 +93,37 @@
     <p class="dl-meta" data-dl-meta>Windows only. It updates itself. Private testing, so it asks for your key.</p>
     <p class="smartscreen">Windows might clutch its pearls because the installer isn't signed yet. Hit <b>More info</b>, then <b>Run anyway</b>.</p>
   </div>
-  <a class="scroll-cue" href="#watch" aria-label="Read on">&#9660;</a>
+  <a class="scroll-cue" href="#doors" aria-label="Read on">&#9660;</a>
 </header>
 
 <main>
 
-  <section class="watch" id="watch" aria-labelledby="watch-h">
+  <section class="wrap doors" id="doors" aria-labelledby="doors-h">
+    <h2 id="doors-h" class="doors-h">Pick a door.</h2>
+    <div class="door-row">
+      <button type="button" class="door door-game" data-door="game" aria-pressed="false">
+        <b>Forget my finances.</b>
+        <span>I just want to game.</span>
+      </button>
+      <button type="button" class="door door-both" data-door="both" aria-pressed="false">
+        <b>Give me both.</b>
+        <span>Show me the money and the monsters.</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="wrap fin" id="quest">
+    <div class="panel quest reveal">
+      <h2>Here's your quest, fricker.</h2>
+      <ol class="ledger">
+        <li><span class="num">1</span><span>Switch on your bank alerts. I read them and file every account in one home.</span></li>
+        <li><span class="num">2</span><span>Stay inside your rations. Good money moves are quests, and quests pay EXP.</span></li>
+        <li><span class="num">3</span><span>Climb sixty ranks. New lairs unlock on the way up. The crystal does not care how rich you are.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="watch game" id="watch" aria-labelledby="watch-h">
     <div class="wrap">
       <div class="cw-intro reveal">
         <div class="cw-crystal" aria-hidden="true"><i></i></div>
@@ -120,7 +145,7 @@
     </div>
   </section>
 
-  <section class="wrap" id="gibbles">
+  <section class="wrap fin" id="gibbles">
     <div class="dialog reveal">
       <figure class="portrait">
 <pre class="ascii" aria-label="A goblin, drawn in text">  /\             /\
@@ -142,7 +167,7 @@
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fin">
     <div class="panel reveal">
       <h2>How it works. Three steps. I counted them twice.</h2>
       <!-- sync:how -->
@@ -153,7 +178,7 @@
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fin">
     <div class="panel reveal">
       <h2>No, I don't want your data.</h2>
       <!-- sync:security -->
@@ -165,7 +190,7 @@
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fin">
     <div class="panel leaves reveal">
       <div>
         <h2>What leaves your PC. The whole list.</h2>
@@ -180,7 +205,7 @@
     </div>
   </section>
 
-  <section class="lairs" id="lairs" aria-labelledby="lairs-h">
+  <section class="lairs fin" id="lairs" aria-labelledby="lairs-h">
     <div class="wrap">
       <h2 id="lairs-h" class="reveal">Pick your lair.</h2>
       <p class="speech-text lairs-lede reveal">Five themes come with Hoard. You start with one. The rest you earn. Click one and I'll put a tune on.</p>
@@ -264,6 +289,6 @@
 </footer>
 
 <audio data-audio preload="none" loop></audio>
-<script src="site.js?v=14"></script>
+<script src="site.js?v=15"></script>
 </body>
 </html>

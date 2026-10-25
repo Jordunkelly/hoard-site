@@ -904,3 +904,27 @@ main > section.wrap:first-child { margin-top: 24px; }
 .cw-tag { font-family: var(--pixel); font-size: .8rem; color: var(--rose); text-align: center; margin-top: 40px; }
 @media (prefers-reduced-motion: reduce) { .cw-crystal { animation: none; } .cw-boss img { transition: none; } }
 
+
+/* Two doors under the download: the game alone, or the game and the money.
+   Until one is picked (and only with scripts on) the page stops at the doors,
+   so it reads in one screen. */
+.doors { padding-top: 40px; padding-bottom: 8px; text-align: center; }
+.doors-h { font-family: var(--pixel); font-size: clamp(1rem, 4vw, 1.4rem); color: var(--gold); margin: 0 0 20px; }
+.door-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.door { display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; min-height: 140px; padding: 22px 16px;
+  background: var(--panel); border: 3px solid var(--border-hi); box-shadow: 4px 4px 0 #000; color: var(--text); cursor: pointer; font: inherit;
+  transition: transform .12s, border-color .2s, box-shadow .2s; }
+.door b { font-family: var(--pixel); font-weight: normal; font-size: clamp(.75rem, 2.6vw, 1rem); line-height: 1.5; }
+.door span { font-family: var(--voice); font-size: 1.35rem; color: var(--muted); }
+.door-game b { color: #b48cff; }
+.door-both b { color: var(--gold); }
+.door:hover, .door:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
+.door-game:hover, .door-game[aria-pressed="true"] { border-color: #8a5cf6; box-shadow: 4px 4px 0 #000, 0 0 22px rgba(138, 92, 246, .35); }
+.door-both:hover, .door-both[aria-pressed="true"] { border-color: var(--gold); box-shadow: 4px 4px 0 #000, 0 0 22px rgba(221, 194, 116, .3); }
+.door[aria-pressed="false"] { opacity: 1; }
+body[data-path] .door[aria-pressed="false"] { opacity: .6; }
+.js body:not([data-path]) main > section:not(.doors) { display: none; }
+body[data-path="game"] .fin { display: none; }
+.quest { margin-top: 24px; }
+@media (max-width: 560px) { .door-row { grid-template-columns: minmax(0, 1fr); } .door { min-height: 110px; } }
+@media (prefers-reduced-motion: reduce) { .door { transition: none; } .door:hover, .door:focus-visible { transform: none; } }

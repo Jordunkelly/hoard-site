@@ -300,3 +300,22 @@
     clips.forEach(function (v) { watch.observe(v); });
   }
 })();
+
+/* The two doors: the game alone, or both. Remembered in this browser only. */
+(function () {
+  document.documentElement.classList.add('js');
+  var doors = document.querySelectorAll('[data-door]');
+  function choose(path, scroll) {
+    document.body.setAttribute('data-path', path);
+    doors.forEach(function (d) { d.setAttribute('aria-pressed', String(d.getAttribute('data-door') === path)); });
+    try { localStorage.setItem('hoard-door', path); } catch (e) {}
+    if (scroll) {
+      var to = document.getElementById(path === 'game' ? 'watch' : 'quest');
+      if (to) to.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  doors.forEach(function (d) { d.addEventListener('click', function () { choose(d.getAttribute('data-door'), true); }); });
+  var saved = null;
+  try { saved = localStorage.getItem('hoard-door'); } catch (e) {}
+  if (saved === 'game' || saved === 'both') choose(saved, false);
+})();

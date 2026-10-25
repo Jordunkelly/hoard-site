@@ -460,11 +460,10 @@
     game: 'You picked just the game. Bold. I will be down here guarding your money from you.',
     both: 'You picked both. Finally, someone with ambition. Here is your quest.'
   };
-  // Both doors picked: a random handful of gold-grubbing stickers bursts up
-  // across the screen and leaves. Never the Slay one; that is the game door's.
+  // Both doors picked: one random gold-grubbing sticker bursts up and leaves. Never the Slay one; that is the game door's.
   var BOTH = ['w', 'go-off-king', 'bet', 'hoard', 'ya-boi', 'just-one-more', 'shiiii'];
   function burst() {
-    var pool = BOTH.slice(), n = 2 + Math.floor(Math.random() * 3);
+    var pool = BOTH.slice(), n = 1;
     for (var i = 0; i < n; i++) {
       var name = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
       (function (name, i) {
@@ -473,9 +472,9 @@
           img.className = 'slay-pop';
           img.alt = '';
           img.src = 'assets/art/gibbles/' + name + '.png';
-          img.style.left = (18 + Math.random() * 64) + '%';
-          img.style.top = (25 + Math.random() * 45) + '%';
-          img.style.width = 'min(200px, 45vw)';
+          img.style.left = '50%';
+          img.style.top = '45%';
+          
           img.addEventListener('animationend', function () { img.remove(); });
           document.body.appendChild(img);
         }, i * 260);

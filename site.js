@@ -350,7 +350,8 @@
   var typing = 0, nag = 0, picked = null, idle = null;
   function type(text) {
     clearInterval(typing);
-    if (still) { say.textContent = text; return; }
+    say.textContent = text;
+    return;
     var i = 0;
     say.textContent = '';
     typing = setInterval(function () {
@@ -370,13 +371,11 @@
     type(NAG[nag]);
     if (nag >= 3) {
       mood('mad', 800);
-      if (row && !still) { row.setAttribute('data-wiggle', ''); setTimeout(function () { row.removeAttribute('data-wiggle'); }, 900); }
     }
   }, 5200);
   document.querySelectorAll('[data-door]').forEach(function (d) {
     var which = d.getAttribute('data-door');
-    d.addEventListener('mouseenter', function () { gib.setAttribute('data-lean', which); if (!picked) type(pickOf(HOVER[which])); });
-    d.addEventListener('mouseleave', function () { gib.removeAttribute('data-lean'); });
+    d.addEventListener('mouseenter', function () { if (!picked) type(pickOf(HOVER[which])); });
     d.addEventListener('click', function () {
       var swap = picked && picked !== which;
       picked = which;

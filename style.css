@@ -977,3 +977,7 @@ body[data-path="game"] .fin { display: none; }
   100% { transform: translate(-50%, -160%) scale(.4) rotate(40deg); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .slay-pop { animation: slayFade 1.6s linear both; } @keyframes slayFade { 0%, 75% { opacity: 1; } 100% { opacity: 0; } } }
+/* He asks, on a hover. No motion. */
+.portrait[data-ask] { position: relative; }
+.portrait[data-ask]:hover::after { content: attr(data-ask); position: absolute; left: 50%; top: -14px; transform: translate(-50%, -100%); white-space: nowrap;
+  padding: 6px 10px; font-family: var(--voice); font-size: 1.3rem; color: var(--text); background: var(--panel); border: 3px solid var(--gold); box-shadow: 4px 4px 0 #000; z-index: 5; }

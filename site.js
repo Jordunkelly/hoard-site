@@ -319,3 +319,77 @@
   try { saved = localStorage.getItem('hoard-door'); } catch (e) {}
   if (saved === 'game' || saved === 'both') choose(saved, false);
 })();
+
+/* Gibbles at the doors. He types, he nags, he gets worse. */
+(function () {
+  var gib = document.querySelector('[data-gib]');
+  if (!gib) return;
+  var say = gib.querySelector('[data-gib-say]');
+  var sticker = gib.querySelector('[data-gib-sticker]');
+  var row = document.querySelector('.door-row');
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NAG = [
+    'Two doors. One choice. Even a pigeon could do this.',
+    'Pick one. I am not getting any younger. I am, in fact, four hundred.',
+    'Left door: monsters. Right door: monsters and your money. Think hard. Or at all.',
+    'I counted the hoard twice while you stared at those doors.',
+    'Now I am hovering. Like your rent.',
+    'Click. A. Door.',
+    'I have outlived three kings waiting on people like you.',
+    'Fine. I will just stand here. Breathing loudly.'
+  ];
+  var HOVER = {
+    game: ['No money stuff? Bold. Your bank will miss you. I will not.', 'Just the game? Your budget is crying somewhere.'],
+    both: ['Ooh. A person of culture. Or a person with bills.', 'Both? Greedy. I respect it.']
+  };
+  var PICK = {
+    game: [['slay', 'Slay. Go play. I will be down here, guarding your money from you.'], ['slay', 'Monsters over money. Iconic. Tragic. Mostly tragic.']],
+    both: [['w', 'Finally. Someone who wants it all. Here is your quest, fricker.'], ['w', 'Big W. The money AND the monsters. Gibbles approves. Barely.']]
+  };
+  var SWAP = 'Changed your mind? Classic. I wrote it down.';
+  var typing = 0, nag = 0, picked = null, idle = null;
+  function type(text) {
+    clearInterval(typing);
+    if (still) { say.textContent = text; return; }
+    var i = 0;
+    say.textContent = '';
+    typing = setInterval(function () {
+      i += 1;
+      say.textContent = text.slice(0, i);
+      if (i >= text.length) clearInterval(typing);
+    }, 28);
+  }
+  function mood(m, ms) {
+    gib.setAttribute('data-mood', m);
+    setTimeout(function () { if (gib.getAttribute('data-mood') === m) gib.removeAttribute('data-mood'); }, ms);
+  }
+  function pickOf(list) { return list[Math.floor(Math.random() * list.length)]; }
+  idle = setInterval(function () {
+    if (picked) return;
+    nag = Math.min(nag + 1, NAG.length - 1);
+    type(NAG[nag]);
+    if (nag >= 3) {
+      mood('mad', 800);
+      if (row && !still) { row.setAttribute('data-wiggle', ''); setTimeout(function () { row.removeAttribute('data-wiggle'); }, 900); }
+    }
+  }, 5200);
+  document.querySelectorAll('[data-door]').forEach(function (d) {
+    var which = d.getAttribute('data-door');
+    d.addEventListener('mouseenter', function () { gib.setAttribute('data-lean', which); if (!picked) type(pickOf(HOVER[which])); });
+    d.addEventListener('mouseleave', function () { gib.removeAttribute('data-lean'); });
+    d.addEventListener('click', function () {
+      var swap = picked && picked !== which;
+      picked = which;
+      var p = pickOf(PICK[which]);
+      sticker.src = 'assets/art/gibbles/' + p[0] + '.png';
+      sticker.hidden = false;
+      sticker.style.animation = 'none';
+      void sticker.offsetWidth;
+      sticker.style.animation = '';
+      mood('pick', 600);
+      type(swap ? SWAP : p[1]);
+    });
+  });
+  var saved = document.body.getAttribute('data-path');
+  if (saved) { picked = saved; type('Back again. You picked ' + (saved === 'game' ? 'the monsters' : 'both') + ' last time. I remember everything.'); }
+})();

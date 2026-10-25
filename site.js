@@ -438,6 +438,7 @@
       if (sticker) {
         sticker.hidden = which !== 'game';
         if (which === 'game') { sticker.style.animation = 'none'; void sticker.offsetWidth; sticker.style.animation = ''; }
+        sticker.onanimationend = function () { sticker.hidden = true; };
       }
       if (!opened) { opened = true; add('bot', 'Hi. I am Gibbles, your AI assistant. I am not an AI. I am a goblin.'); }
       reply(DOOR[which]);

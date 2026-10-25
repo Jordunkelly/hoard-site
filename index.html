@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -104,7 +104,6 @@
       <button type="button" class="door door-game" data-door="game" aria-pressed="false">
         <b>Forget my finances.</b>
         <span>I just want to game.</span>
-        <img class="door-sticker" data-gib-sticker src="assets/art/gibbles/slay.png" alt="" width="110" height="110" hidden>
       </button>
       <button type="button" class="door door-both" data-door="both" aria-pressed="false">
         <b>Give me both.</b>
@@ -290,6 +289,7 @@
 </footer>
 
 <audio data-audio preload="none" loop></audio>
+<img class="slay-pop" data-gib-sticker src="assets/art/gibbles/slay.png" alt="" width="260" height="260" hidden>
 <div class="gchat" data-gchat>
   <section class="gchat-panel" data-gchat-panel aria-label="Chat with Gibbles" hidden>
     <header class="gchat-head">
@@ -311,6 +311,6 @@
     <i class="gchat-badge" data-gchat-badge>1</i>
   </button>
 </div>
-<script src="site.js?v=22"></script>
+<script src="site.js?v=23"></script>
 </body>
 </html>

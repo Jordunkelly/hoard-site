@@ -320,65 +320,26 @@
   if (saved === 'game' || saved === 'both') choose(saved, false);
 })();
 
-/* Gibbles at the doors, shouting from a toast. He nags, he gets worse. */
+/* Gibbles at the doors. He says one thing, once, when a door is picked, and
+   stays put: no nagging, no hover chatter, no popping in and out. */
 (function () {
   var toast = document.querySelector('[data-gib]');
   if (!toast) return;
   var say = toast.querySelector('[data-gib-say]');
   var sticker = document.querySelector('[data-gib-sticker]');
-  var doors = document.getElementById('doors');
-  var NAG = [
-    'Two doors. One choice. Even a pigeon could do this.',
-    'Pick one. I am not getting any younger. I am, in fact, four hundred.',
-    'Left door: monsters. Right door: monsters and your money. Think hard. Or at all.',
-    'I counted the hoard twice while you stared at those doors.',
-    'Now I am hovering. Like your rent.',
-    'Click. A. Door.',
-    'I have outlived three kings waiting on people like you.',
-    'Fine. I will just stand here. Breathing loudly.'
-  ];
-  var HOVER = {
-    game: ['No money stuff? Bold. Your bank will miss you. I will not.', 'Just the game? Your budget is crying somewhere.'],
-    both: ['Ooh. A person of culture. Or a person with bills.', 'Both? Greedy. I respect it.']
+  var LINE = {
+    game: 'Go play. I will be down here, guarding your money from you.',
+    both: 'Finally. Someone who wants it all. Here is your quest.'
   };
-  var PICK = {
-    game: ['Slay. Go play. I will be down here, guarding your money from you.', 'Monsters over money. Iconic. Tragic. Mostly tragic.'],
-    both: ['Finally. Someone who wants it all. Here is your quest, fricker.', 'The money AND the monsters. Gibbles approves. Barely.']
-  };
-  var SWAP = 'Changed your mind? Classic. I wrote it down.';
-  var nag = -1, picked = null, hide = 0, seen = false;
-  function shout(text, ms) {
-    say.textContent = text;
-    toast.hidden = false;
-    clearTimeout(hide);
-    hide = setTimeout(function () { toast.hidden = true; }, ms || 4500);
-  }
-  function pickOf(list) { return list[Math.floor(Math.random() * list.length)]; }
-  // He starts nagging once the doors are on screen, not before.
-  if (doors && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) seen = true; }); }, { threshold: 0.4 }).observe(doors);
-  } else { seen = true; }
-  setInterval(function () {
-    if (picked || !seen) return;
-    nag = Math.min(nag + 1, NAG.length - 1);
-    shout(NAG[nag]);
-  }, 6000);
   document.querySelectorAll('[data-door]').forEach(function (d) {
     var which = d.getAttribute('data-door');
-    d.addEventListener('mouseenter', function () { if (!picked) shout(pickOf(HOVER[which]), 3000); });
     d.addEventListener('click', function () {
-      var swap = picked && picked !== which;
-      picked = which;
       if (sticker) {
         sticker.hidden = which !== 'game';
         if (which === 'game') { sticker.style.animation = 'none'; void sticker.offsetWidth; sticker.style.animation = ''; }
       }
-      shout(swap ? SWAP : pickOf(PICK[which]), 5000);
+      say.textContent = LINE[which];
+      toast.hidden = false;
     });
   });
-  var saved = document.body.getAttribute('data-path');
-  if (saved) {
-    picked = saved;
-    shout('Back again. You picked ' + (saved === 'game' ? 'the monsters' : 'both') + ' last time. I remember everything.');
-  }
 })();

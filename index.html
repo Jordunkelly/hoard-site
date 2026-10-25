@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -100,17 +100,11 @@
 
   <section class="wrap doors" id="doors" aria-labelledby="doors-h">
     <h2 id="doors-h" class="doors-h">Pick a door.</h2>
-    <div class="gib" data-gib>
-      <div class="gib-face">
-        <img class="gib-portrait" src="assets/art/gibbles/gibbles.webp" alt="Gibbles, the goblin who runs Hoard" width="128" height="128">
-        <img class="gib-sticker" data-gib-sticker src="assets/art/gibbles/slay.png" alt="" width="120" height="120" hidden>
-      </div>
-      <p class="gib-bubble" data-gib-say aria-live="polite">Two doors. One choice. Even a pigeon could do this.</p>
-    </div>
     <div class="door-row">
       <button type="button" class="door door-game" data-door="game" aria-pressed="false">
         <b>Forget my finances.</b>
         <span>I just want to game.</span>
+        <img class="door-sticker" data-gib-sticker src="assets/art/gibbles/slay.png" alt="" width="110" height="110" hidden>
       </button>
       <button type="button" class="door door-both" data-door="both" aria-pressed="false">
         <b>Give me both.</b>
@@ -296,6 +290,10 @@
 </footer>
 
 <audio data-audio preload="none" loop></audio>
-<script src="site.js?v=18"></script>
+<div class="gib-toast" data-gib role="status" aria-live="polite" hidden>
+  <img src="assets/art/gibbles/gibbles.webp" alt="" width="56" height="56">
+  <p><b>GIBBLES</b><span data-gib-say></span></p>
+</div>
+<script src="site.js?v=19"></script>
 </body>
 </html>

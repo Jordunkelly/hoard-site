@@ -929,22 +929,17 @@ body[data-path="game"] .fin { display: none; }
 @media (max-width: 560px) { .door-row { grid-template-columns: minmax(0, 1fr); } .door { min-height: 110px; } }
 @media (prefers-reduced-motion: reduce) { .door { transition: none; } .door:hover, .door:focus-visible { transform: none; } }
 
-/* Gibbles at the doors: he bobs, leans at the door under the cursor, nags
-   harder the longer nobody picks, and stamps a sticker on the choice. */
-.gib { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 0 auto 22px; max-width: 640px; text-align: left; }
-.gib-face { position: relative; flex: none; width: 128px; height: 128px; }
-.gib-portrait { width: 128px; height: 128px; image-rendering: pixelated; border: 3px solid var(--gold); box-shadow: 4px 4px 0 #000; background: var(--inset); }
-.gib-sticker { position: absolute; z-index: 2; left: -84px; top: -36px; width: 120px; height: 120px; filter: drop-shadow(3px 3px 0 #000); animation: gibStamp .45s cubic-bezier(.2, 1.6, .4, 1) both; pointer-events: none; }
-.gib-bubble { position: relative; margin: 0; padding: 12px 16px; min-height: 3.2em; font-family: var(--voice); font-size: 1.45rem; line-height: 1.15; color: var(--text);
-  background: var(--panel); border: 3px solid var(--border-hi); box-shadow: 4px 4px 0 #000; }
-.gib-bubble::before { content: ""; position: absolute; left: -12px; top: 50%; margin-top: -8px; border: 8px solid transparent; border-right-color: var(--border-hi); border-left: 0; }
-.gib[data-mood="mad"] .gib-bubble { border-color: var(--rose); }
+/* Gibbles shouts from a toast in the corner, so a line of any length never
+   moves the page, and the Slay sticker stamps on the game door when it is
+   picked. */
+.gib-toast { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center; gap: 12px; width: min(360px, calc(100vw - 32px));
+  padding: 10px 14px 10px 10px; background: var(--panel); border: 3px solid var(--gold); box-shadow: 4px 4px 0 #000; }
+.gib-toast[hidden] { display: none; }
+.gib-toast img { flex: none; width: 56px; height: 56px; image-rendering: pixelated; border: 2px solid var(--border-hi); background: var(--inset); }
+.gib-toast p { margin: 0; font-family: var(--voice); font-size: 1.3rem; line-height: 1.1; color: var(--text); }
+.gib-toast b { display: block; margin-bottom: 4px; font-family: var(--pixel); font-weight: normal; font-size: .55rem; color: var(--gold); letter-spacing: .1em; }
+.door { position: relative; }
+.door-sticker { position: absolute; right: 6px; top: -12px; width: 92px; height: 92px; filter: drop-shadow(3px 3px 0 #000); pointer-events: none;
+  animation: gibStamp .45s cubic-bezier(.2, 1.6, .4, 1) both; }
 @keyframes gibStamp { from { transform: scale(2.2) rotate(-25deg); opacity: 0; } to { transform: scale(1) rotate(8deg); opacity: 1; } }
-@media (max-width: 560px) {
-  .gib { flex-direction: column; text-align: center; }
-  .gib-bubble::before { left: 50%; top: -12px; margin: 0 0 0 -8px; border: 8px solid transparent; border-bottom-color: var(--border-hi); border-top: 0; }
-  .gib-sticker { left: -90px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .gib-sticker { animation: none !important; }
-}
+@media (prefers-reduced-motion: reduce) { .door-sticker { animation: none; transform: rotate(8deg); } }

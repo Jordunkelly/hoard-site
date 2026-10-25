@@ -320,14 +320,13 @@
   if (saved === 'game' || saved === 'both') choose(saved, false);
 })();
 
-/* Gibbles at the doors. He types, he nags, he gets worse. */
+/* Gibbles at the doors, shouting from a toast. He nags, he gets worse. */
 (function () {
-  var gib = document.querySelector('[data-gib]');
-  if (!gib) return;
-  var say = gib.querySelector('[data-gib-say]');
-  var sticker = gib.querySelector('[data-gib-sticker]');
-  var row = document.querySelector('.door-row');
-  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var toast = document.querySelector('[data-gib]');
+  if (!toast) return;
+  var say = toast.querySelector('[data-gib-say]');
+  var sticker = document.querySelector('[data-gib-sticker]');
+  var doors = document.getElementById('doors');
   var NAG = [
     'Two doors. One choice. Even a pigeon could do this.',
     'Pick one. I am not getting any younger. I am, in fact, four hundred.',
@@ -343,52 +342,44 @@
     both: ['Ooh. A person of culture. Or a person with bills.', 'Both? Greedy. I respect it.']
   };
   var PICK = {
-    game: [['slay', 'Slay. Go play. I will be down here, guarding your money from you.'], ['slay', 'Monsters over money. Iconic. Tragic. Mostly tragic.']],
-    both: [[null, 'Finally. Someone who wants it all. Here is your quest, fricker.'], [null, 'The money AND the monsters. Gibbles approves. Barely.']]
+    game: ['Slay. Go play. I will be down here, guarding your money from you.', 'Monsters over money. Iconic. Tragic. Mostly tragic.'],
+    both: ['Finally. Someone who wants it all. Here is your quest, fricker.', 'The money AND the monsters. Gibbles approves. Barely.']
   };
   var SWAP = 'Changed your mind? Classic. I wrote it down.';
-  var typing = 0, nag = 0, picked = null, idle = null;
-  function type(text) {
-    clearInterval(typing);
+  var nag = -1, picked = null, hide = 0, seen = false;
+  function shout(text, ms) {
     say.textContent = text;
-    return;
-    var i = 0;
-    say.textContent = '';
-    typing = setInterval(function () {
-      i += 1;
-      say.textContent = text.slice(0, i);
-      if (i >= text.length) clearInterval(typing);
-    }, 28);
-  }
-  function mood(m, ms) {
-    gib.setAttribute('data-mood', m);
-    setTimeout(function () { if (gib.getAttribute('data-mood') === m) gib.removeAttribute('data-mood'); }, ms);
+    toast.hidden = false;
+    clearTimeout(hide);
+    hide = setTimeout(function () { toast.hidden = true; }, ms || 4500);
   }
   function pickOf(list) { return list[Math.floor(Math.random() * list.length)]; }
-  idle = setInterval(function () {
-    if (picked) return;
+  // He starts nagging once the doors are on screen, not before.
+  if (doors && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) seen = true; }); }, { threshold: 0.4 }).observe(doors);
+  } else { seen = true; }
+  setInterval(function () {
+    if (picked || !seen) return;
     nag = Math.min(nag + 1, NAG.length - 1);
-    type(NAG[nag]);
-    if (nag >= 3) {
-      mood('mad', 800);
-    }
-  }, 5200);
+    shout(NAG[nag]);
+  }, 6000);
   document.querySelectorAll('[data-door]').forEach(function (d) {
     var which = d.getAttribute('data-door');
-    d.addEventListener('mouseenter', function () { if (!picked) type(pickOf(HOVER[which])); });
+    d.addEventListener('mouseenter', function () { if (!picked) shout(pickOf(HOVER[which]), 3000); });
     d.addEventListener('click', function () {
       var swap = picked && picked !== which;
       picked = which;
-      var p = pickOf(PICK[which]);
-      sticker.hidden = !p[0];
-      if (p[0]) sticker.src = 'assets/art/gibbles/' + p[0] + '.png';
-      sticker.style.animation = 'none';
-      void sticker.offsetWidth;
-      sticker.style.animation = '';
-      mood('pick', 600);
-      type(swap ? SWAP : p[1]);
+      if (sticker) {
+        sticker.hidden = which !== 'game';
+        if (which === 'game') { sticker.style.animation = 'none'; void sticker.offsetWidth; sticker.style.animation = ''; }
+      }
+      shout(swap ? SWAP : pickOf(PICK[which]), 5000);
     });
   });
   var saved = document.body.getAttribute('data-path');
-  if (saved) { picked = saved; type('Back again. You picked ' + (saved === 'game' ? 'the monsters' : 'both') + ' last time. I remember everything.'); }
+  if (saved) {
+    picked = saved;
+    if (sticker) sticker.hidden = saved !== 'game';
+    shout('Back again. You picked ' + (saved === 'game' ? 'the monsters' : 'both') + ' last time. I remember everything.');
+  }
 })();

@@ -556,3 +556,34 @@
     });
   });
 })();
+
+/* Choose your hero, condensed: the slot under the cursor or picked reads in the plate. */
+(function () {
+  var root = document.querySelector('[data-heroes]');
+  if (!root) return;
+  var HEROES = {
+    mage: { name: 'Mage', state: 'Playable now', verse: 'Each spell unwritten,\neach dragon unborn.\nNever enough.\nNever the end of night.' },
+    warrior: { name: 'Warrior', state: 'Coming soon', verse: 'Sworn to battle, bound in blood,\nForged in fire and tempered in mud.\nThe horn will sound, the line will break,\nNever sheathed, for the oath\'s own sake.' },
+    priest: { name: 'Priest', state: 'Coming soon', verse: 'When the last sun died, the embers carried on,\nHeld in ash through the long night gone.\nA light too small for the dark to see,\nNever dimmed, for the dawn to be.' }
+  };
+  var name = root.querySelector('[data-hero-name]');
+  var verse = root.querySelector('[data-hero-verse]');
+  var state = root.querySelector('[data-hero-state]');
+  var slots = root.querySelectorAll('[data-hero]');
+  var picked = 'mage';
+  function show(id) {
+    var h = HEROES[id];
+    if (!h) return;
+    name.textContent = h.name;
+    verse.textContent = h.verse;
+    state.textContent = h.state;
+    slots.forEach(function (s) { s.setAttribute('aria-pressed', String(s.getAttribute('data-hero') === id)); });
+  }
+  slots.forEach(function (s) {
+    var id = s.getAttribute('data-hero');
+    s.addEventListener('mouseenter', function () { show(id); });
+    s.addEventListener('focus', function () { show(id); });
+    s.addEventListener('mouseleave', function () { show(picked); });
+    s.addEventListener('click', function () { picked = id; show(id); });
+  });
+})();

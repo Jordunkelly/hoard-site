@@ -981,3 +981,32 @@ body[data-path="game"] .fin { display: none; }
 .portrait[data-ask] { position: relative; }
 .portrait[data-ask]:hover::after { content: attr(data-ask); position: absolute; left: 50%; top: -14px; transform: translate(-50%, -100%); white-space: nowrap;
   padding: 6px 10px; font-family: var(--voice); font-size: 1.3rem; color: var(--text); background: var(--panel); border: 3px solid var(--gold); box-shadow: 4px 4px 0 #000; z-index: 5; }
+
+/* Choose your hero, condensed from the game's own select: the Mage lit under
+   a shaft of light, the Warrior and the Priest as shadows, and one plate of
+   fixed size beneath that reads the hero under the cursor. The plate never
+   changes size, so nothing moves on a hover. */
+.cw-heroes { margin: 48px auto 0; max-width: 680px; text-align: center; }
+.cw-heroes-h { margin: 0 0 18px; font-family: var(--pixel); font-weight: normal; font-size: clamp(.85rem, 2.8vw, 1.1rem); color: var(--gold); }
+.cw-stage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 12px; }
+.cw-slot { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 210px; padding: 0 0 8px;
+  background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; }
+.cw-slot b { font-family: var(--pixel); font-weight: normal; font-size: .7rem; color: var(--text); letter-spacing: .08em; text-transform: uppercase; }
+.cw-kicker { font-family: var(--pixel); font-size: .5rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.cw-slot[aria-pressed="true"] .cw-kicker { color: #8eaad0; }
+.cw-slot img { width: auto; height: 120px; image-rendering: pixelated; margin-bottom: 14px; }
+.cw-slot.soon img { filter: drop-shadow(0 0 1px #3d3550); }
+.cw-slot.soon[aria-pressed="true"] img { filter: drop-shadow(0 0 6px rgba(142, 170, 208, .45)); }
+.cw-shaft { position: absolute; left: 50%; bottom: 36px; width: 70%; height: 180px; transform: translateX(-50%); pointer-events: none;
+  background: linear-gradient(to top, rgba(142, 170, 208, .32), rgba(142, 170, 208, 0)); clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%); }
+.cw-mage { position: relative; width: 180px; height: 150px; margin-bottom: 0; }
+.cw-mage, .cw-mage i { background: url("assets/art/maul/heroes/mage.png") 0 0 / 1080px 600px no-repeat; image-rendering: pixelated; animation: cwIdle 1s steps(6) infinite; }
+.cw-mage i { position: absolute; inset: 0; background-image: url("assets/art/maul/heroes/mage-glow.png"); mix-blend-mode: screen; }
+@keyframes cwIdle { to { background-position: -1080px 0; } }
+.cw-plate { display: grid; grid-template-rows: auto 1fr auto; gap: 8px; height: 176px; margin-top: 8px; padding: 14px 18px; text-align: left; overflow: hidden;
+  background: var(--panel); border-top: 2px solid #8eaad0; box-shadow: 4px 4px 0 #000; }
+.cw-plate b { font-family: var(--pixel); font-weight: normal; font-size: .75rem; color: var(--text); text-transform: uppercase; }
+.cw-plate p { margin: 0; font-family: var(--voice); font-style: italic; font-size: 1.2rem; line-height: 1.1; color: var(--text); white-space: pre-line; }
+.cw-state { font-family: var(--pixel); font-size: .5rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 560px) { .cw-slot { height: 170px; } .cw-slot img { height: 90px; } .cw-mage { width: 120px; height: 100px; } .cw-mage, .cw-mage i { background-size: 720px 400px; } @keyframes cwIdle { to { background-position: -720px 0; } } .cw-plate { height: 210px; } }
+@media (prefers-reduced-motion: reduce) { .cw-mage, .cw-mage i { animation: none; } }

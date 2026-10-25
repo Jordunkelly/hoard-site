@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -134,6 +134,36 @@
             <source src="assets/clips/crystal-watch-teaser.mp4" type="video/mp4">
           </video>
         </figure>
+      </div>
+
+      <div class="cw-heroes reveal" data-heroes>
+        <h3 class="cw-heroes-h">Choose your hero.</h3>
+        <div class="cw-stage">
+          <button type="button" class="cw-slot" data-hero="mage" aria-pressed="true">
+            <span class="cw-shaft" aria-hidden="true"></span>
+            <span class="cw-mage" aria-hidden="true"><i></i></span>
+            <span class="cw-kicker">Rift</span>
+            <b>Mage</b>
+          </button>
+          <button type="button" class="cw-slot soon" data-hero="warrior" aria-pressed="false">
+            <img src="assets/art/maul/heroes/warrior.png" alt="" width="31" height="33">
+            <span class="cw-kicker">Ruin</span>
+            <b>Warrior</b>
+          </button>
+          <button type="button" class="cw-slot soon" data-hero="priest" aria-pressed="false">
+            <img src="assets/art/maul/heroes/priest.png" alt="" width="24" height="33">
+            <span class="cw-kicker">Divine</span>
+            <b>Priest</b>
+          </button>
+        </div>
+        <div class="cw-plate" aria-live="polite">
+          <b data-hero-name>Mage</b>
+          <p data-hero-verse>Each spell unwritten,
+each dragon unborn.
+Never enough.
+Never the end of night.</p>
+          <span class="cw-state" data-hero-state>Playable now</span>
+        </div>
       </div>
 
       <figure class="cw-boss reveal">
@@ -311,6 +341,6 @@
     <i class="gchat-badge" data-gchat-badge>1</i>
   </button>
 </div>
-<script src="site.js?v=28"></script>
+<script src="site.js?v=29"></script>
 </body>
 </html>

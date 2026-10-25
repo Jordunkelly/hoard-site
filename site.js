@@ -344,7 +344,7 @@
   };
   var PICK = {
     game: [['slay', 'Slay. Go play. I will be down here, guarding your money from you.'], ['slay', 'Monsters over money. Iconic. Tragic. Mostly tragic.']],
-    both: [['w', 'Finally. Someone who wants it all. Here is your quest, fricker.'], ['w', 'Big W. The money AND the monsters. Gibbles approves. Barely.']]
+    both: [[null, 'Finally. Someone who wants it all. Here is your quest, fricker.'], [null, 'The money AND the monsters. Gibbles approves. Barely.']]
   };
   var SWAP = 'Changed your mind? Classic. I wrote it down.';
   var typing = 0, nag = 0, picked = null, idle = null;
@@ -381,8 +381,8 @@
       var swap = picked && picked !== which;
       picked = which;
       var p = pickOf(PICK[which]);
-      sticker.src = 'assets/art/gibbles/' + p[0] + '.png';
-      sticker.hidden = false;
+      sticker.hidden = !p[0];
+      if (p[0]) sticker.src = 'assets/art/gibbles/' + p[0] + '.png';
       sticker.style.animation = 'none';
       void sticker.offsetWidth;
       sticker.style.animation = '';

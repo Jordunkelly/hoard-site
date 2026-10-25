@@ -379,7 +379,6 @@
   var saved = document.body.getAttribute('data-path');
   if (saved) {
     picked = saved;
-    if (sticker) sticker.hidden = saved !== 'game';
     shout('Back again. You picked ' + (saved === 'game' ? 'the monsters' : 'both') + ' last time. I remember everything.');
   }
 })();

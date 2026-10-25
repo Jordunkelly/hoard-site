@@ -300,14 +300,3 @@
     clips.forEach(function (v) { watch.observe(v); });
   }
 })();
-
-/* Crystal Watch: the last boss lights up once he is in view */
-(function () {
-  var boss = document.querySelector('[data-cw-boss]');
-  if (boss && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { setTimeout(function () { boss.classList.add('lit'); }, 500); io.disconnect(); } });
-    }, { threshold: 0.6 });
-    io.observe(boss);
-  } else if (boss) { boss.classList.add('lit'); }
-})();

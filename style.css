@@ -1013,7 +1013,10 @@ body[data-path="game"] .fin { display: none; }
 
 /* ── Patch notes page, and the links that lead to it ── */
 .topbar-end { display: flex; align-items: center; gap: 10px; }
+.topnav, .topbar-end .tunes { min-height: 44px; }
 .topnav {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--pixel);
   font-size: 10px;
   color: var(--text);
@@ -1021,36 +1024,51 @@ body[data-path="game"] .fin { display: none; }
   background: var(--panel);
   border: 3px solid var(--border-hi);
   box-shadow: 3px 3px 0 #000;
-  padding: 8px 10px;
+  padding: 8px 12px;
 }
 .topnav:hover { color: var(--text); border-color: var(--gold); }
-.footer .footer-links { margin-top: 18px; font-family: var(--pixel); font-size: 10px; line-height: 2.2; }
-.footer-links a { margin: 0 10px; }
+.footer .footer-links { margin-top: 18px; font-family: var(--pixel); font-size: 10px; line-height: 1.5; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; }
 
-.notes { padding-top: 88px; }
+/* The home page lets its hero sit under a see-through top bar. A list of
+   notes scrolled under the same bar and the wordmark landed on top of the
+   text, so here the bar is solid and takes its own space. */
+.notes-page .topbar {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 2px solid var(--border);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.notes { padding-top: 32px; }
+.notes .panel { padding: 24px; }
 .notes-h {
   margin: 0 0 14px;
   font-family: var(--pixel);
   font-weight: 400;
-  font-size: clamp(18px, 4vw, 26px);
+  font-size: clamp(16px, 4vw, 26px);
   line-height: 1.4;
   color: var(--gold);
 }
-.notes-lede { margin: 0; font-family: var(--voice); font-size: 27px; line-height: 1.2; }
-.notes-status { margin: 32px 0 0; font-family: var(--voice); font-size: 24px; line-height: 1.2; color: var(--muted); }
+.notes-lede, .notes-status, .note-body { overflow-wrap: anywhere; }
+.notes-lede { margin: 0; font-family: var(--plain); font-size: 18px; line-height: 1.5; }
+.notes-status { margin: 28px 0 0; font-family: var(--plain); font-size: 16px; line-height: 1.5; color: var(--muted); }
 .notes-status.is-error { color: var(--text); }
-.notes-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 32px; }
-.note { scroll-margin-top: 80px; }
+.notes-status a { display: inline-block; min-height: 44px; line-height: 44px; }
+.notes-list { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 28px; }
+.note { scroll-margin-top: 80px; min-width: 0; }
 .note-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 14px;
-  padding-bottom: 14px;
+  padding-bottom: 12px;
   margin-bottom: 14px;
   border-bottom: 2px dashed var(--border-hi);
   font-family: var(--pixel);
   font-size: 10px;
+  line-height: 1.6;
   color: var(--muted);
 }
 .note-head .ver-tag { font-size: 14px; }
@@ -1064,15 +1082,16 @@ body[data-path="game"] .fin { display: none; }
   box-shadow: 2px 2px 0 #000;
 }
 .note-pre { color: var(--ember); }
-.note-link { margin-left: auto; }
-.note-body { font-family: var(--voice); font-size: 25px; line-height: 1.2; overflow-wrap: anywhere; }
+.note-link { display: inline-flex; align-items: center; min-height: 44px; margin-left: auto; }
+.note-body { font-family: var(--plain); font-size: 17px; line-height: 1.55; }
 .note-body p { margin: 0 0 12px; }
 .note-body > :last-child, .note-group > :last-child { margin-bottom: 0; }
-.note-body ul { margin: 0 0 12px; padding-left: 24px; list-style: square; }
+.note-body ul { margin: 0 0 12px; padding-left: 20px; list-style: square; }
 .note-body li { margin: 0 0 6px; }
 .note-body li::marker { color: var(--ember); }
-.note-body b { color: var(--gold); font-weight: 400; }
-.note-body code { font-family: var(--voice); color: var(--gold); background: var(--inset); padding: 0 4px; }
+.note-body b { color: var(--gold); }
+.note-body code { font-family: var(--voice); font-size: 1.15em; color: var(--gold); background: var(--inset); padding: 0 4px; }
+.note-body a { overflow-wrap: anywhere; }
 .note-empty { color: var(--muted); }
 .note-group { margin: 0 0 16px; }
 .note-group h3 {
@@ -1087,11 +1106,15 @@ body[data-path="game"] .fin { display: none; }
 }
 .note-group.is-features h3 { color: var(--ink); background: var(--gold); border-color: var(--ink); }
 .note-group.is-fixes h3 { color: var(--ink); background: var(--ember); border-color: var(--ink); }
-@media (max-width: 760px) {
-  .notes-lede { font-size: 24px; }
-  .note-body { font-size: 22px; }
+
+/* Phones first in practice: version over date over link, one per line,
+   with the panel's padding and shadow trimmed so a 16px gutter still holds. */
+@media (max-width: 560px) {
+  .notes { padding-top: 24px; }
+  .notes .panel { padding: 16px; box-shadow: 0 0 0 4px #000, 6px 6px 0 4px #000; }
+  .notes-lede { font-size: 16px; }
+  .note-head { flex-direction: column; align-items: flex-start; gap: 6px; padding-bottom: 6px; }
   .note-link { margin-left: 0; }
-}
-@media (max-width: 420px) {
-  .topbar-end .topnav { padding: 8px; }
+  .note-body { font-size: 16px; }
+  .note-body ul { padding-left: 18px; }
 }

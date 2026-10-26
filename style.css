@@ -1010,3 +1010,88 @@ body[data-path="game"] .fin { display: none; }
 .cw-state { font-family: var(--pixel); font-size: .5rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 @media (max-width: 560px) { .cw-slot { height: 170px; } .cw-slot img { height: 90px; } .cw-mage { width: 120px; height: 100px; } .cw-mage, .cw-mage i { background-size: 720px 400px; } @keyframes cwIdle { to { background-position: -720px 0; } } .cw-plate { height: 210px; } }
 @media (prefers-reduced-motion: reduce) { .cw-mage, .cw-mage i { animation: none; } }
+
+/* ── Patch notes page, and the links that lead to it ── */
+.topbar-end { display: flex; align-items: center; gap: 10px; }
+.topnav {
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--panel);
+  border: 3px solid var(--border-hi);
+  box-shadow: 3px 3px 0 #000;
+  padding: 8px 10px;
+}
+.topnav:hover { color: var(--text); border-color: var(--gold); }
+.footer .footer-links { margin-top: 18px; font-family: var(--pixel); font-size: 10px; line-height: 2.2; }
+.footer-links a { margin: 0 10px; }
+
+.notes { padding-top: 88px; }
+.notes-h {
+  margin: 0 0 14px;
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: clamp(18px, 4vw, 26px);
+  line-height: 1.4;
+  color: var(--gold);
+}
+.notes-lede { margin: 0; font-family: var(--voice); font-size: 27px; line-height: 1.2; }
+.notes-status { margin: 32px 0 0; font-family: var(--voice); font-size: 24px; line-height: 1.2; color: var(--muted); }
+.notes-status.is-error { color: var(--text); }
+.notes-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 32px; }
+.note { scroll-margin-top: 80px; }
+.note-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 2px dashed var(--border-hi);
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--muted);
+}
+.note-head .ver-tag { font-size: 14px; }
+.note-ver {
+  display: inline-block;
+  padding: 3px 7px 2px;
+  font-size: 14px;
+  color: var(--gold);
+  border: 2px solid var(--border-hi);
+  background: var(--inset);
+  box-shadow: 2px 2px 0 #000;
+}
+.note-pre { color: var(--ember); }
+.note-link { margin-left: auto; }
+.note-body { font-family: var(--voice); font-size: 25px; line-height: 1.2; overflow-wrap: anywhere; }
+.note-body p { margin: 0 0 12px; }
+.note-body > :last-child, .note-group > :last-child { margin-bottom: 0; }
+.note-body ul { margin: 0 0 12px; padding-left: 24px; list-style: square; }
+.note-body li { margin: 0 0 6px; }
+.note-body li::marker { color: var(--ember); }
+.note-body b { color: var(--gold); font-weight: 400; }
+.note-body code { font-family: var(--voice); color: var(--gold); background: var(--inset); padding: 0 4px; }
+.note-empty { color: var(--muted); }
+.note-group { margin: 0 0 16px; }
+.note-group h3 {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 4px 8px;
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: 10px;
+  color: var(--text);
+  border: 2px solid var(--border-hi);
+}
+.note-group.is-features h3 { color: var(--ink); background: var(--gold); border-color: var(--ink); }
+.note-group.is-fixes h3 { color: var(--ink); background: var(--ember); border-color: var(--ink); }
+@media (max-width: 760px) {
+  .notes-lede { font-size: 24px; }
+  .note-body { font-size: 22px; }
+  .note-link { margin-left: 0; }
+}
+@media (max-width: 420px) {
+  .topbar-end .topnav { padding: 8px; }
+}

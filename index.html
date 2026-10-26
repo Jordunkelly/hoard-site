@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=23">
+<link rel="stylesheet" href="style.css?v=24">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -42,6 +42,8 @@
 
 <div class="topbar">
   <a class="wordmark" href="#top"><img src="assets/art/favicon.png" alt="" width="24" height="24">HOARD</a>
+  <div class="topbar-end">
+  <a class="topnav" href="patch-notes.html">Patch notes</a>
   <button class="tunes" type="button" aria-pressed="false" data-tunes>
     <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" shape-rendering="crispEdges">
       <rect x="1" y="5" width="3" height="6" fill="currentColor"/>
@@ -52,6 +54,7 @@
     </svg>
     <span data-tunes-label>Tunes off</span>
   </button>
+  </div>
 </div>
 
 <header class="hero" id="top">
@@ -315,6 +318,7 @@ Never the end of night.</p>
 
 <footer class="footer">
   <p>The Keeper has the energy of a goblin on six espressos. This page may change on a dime. Yes, that was a money pun. I hate it too.</p>
+  <p class="footer-links"><a href="patch-notes.html">Patch notes</a></p>
   <p class="legal">©2026 Valve Corporation. Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries.</p>
 </footer>
 

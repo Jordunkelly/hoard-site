@@ -710,8 +710,60 @@
     input.value = '';
   }
   function closeMenu() { chips.hidden = true; askBtn.setAttribute('aria-expanded', 'false'); }
+
+  // On a phone the chat is a full-screen sheet. Tested on a real Android
+  // phone, the floating panel ran up over the top bar and left the log a
+  // 200px strip, so under 560px it covers the screen, the page behind it
+  // stops scrolling, and its height follows the visual viewport so the
+  // keyboard pushes the box and Send up instead of covering them.
+  var phone = window.matchMedia ? window.matchMedia('(max-width: 560px)') : { matches: false };
+  var lockedAt = null;
+  function lock() {
+    if (lockedAt !== null || !phone.matches) return;
+    lockedAt = window.scrollY;
+    var b = document.body.style;
+    b.position = 'fixed'; b.top = -lockedAt + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+  }
+  function unlock() {
+    if (lockedAt === null) return;
+    var b = document.body.style, y = lockedAt;
+    b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
+    lockedAt = null;
+    var de = document.documentElement, was = de.style.scrollBehavior;
+    de.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    de.style.scrollBehavior = was;
+  }
+  var vv = window.visualViewport;
+  function fit() {
+    if (panel.hidden || !phone.matches || !vv) { panel.classList.remove('is-short'); panel.style.removeProperty('--gchat-h'); panel.style.removeProperty('--gchat-top'); return; }
+    panel.style.setProperty('--gchat-h', Math.round(vv.height) + 'px');
+    panel.style.setProperty('--gchat-top', Math.round(vv.offsetTop) + 'px');
+    // With a keyboard up on a small phone the log was down to 27px, so the
+    // role line and the privacy line step aside until it closes.
+    panel.classList.toggle('is-short', vv.height < 480);
+    log.scrollTop = log.scrollHeight;
+  }
+  if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
+  function onPhoneChange() {
+    if (panel.hidden) return;
+    if (phone.matches) lock(); else unlock();
+    fit();
+  }
+  if (phone.addEventListener) phone.addEventListener('change', onPhoneChange);
+  else if (phone.addListener) phone.addListener(onPhoneChange);
+  function close() {
+    closeMenu();
+    panel.hidden = true;
+    root.classList.remove('is-open');
+    unlock();
+    fit();
+  }
   function open() {
     panel.hidden = false;
+    root.classList.add('is-open');
+    lock();
+    fit();
     tease.hidden = true;
     badge.hidden = true;
     unread = 0;
@@ -719,6 +771,7 @@
       opened = true;
       add('bot', greeting());
     }
+    log.scrollTop = log.scrollHeight;
     // A phone keyboard would cover half the chat the moment it opens, so the
     // box only takes focus where there is a real pointer.
     if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
@@ -737,6 +790,11 @@
   });
   askBtn.addEventListener('click', function () {
     var show = chips.hidden;
+    // The menu opens upward over the log and no further: its height is
+    // capped at the room between the log's top and the Ask row, and it
+    // scrolls inside that. Uncapped it rose out of the panel and over the
+    // header and the close button.
+    if (show) chips.style.maxHeight = Math.max(120, pills.getBoundingClientRect().top - log.getBoundingClientRect().top - 8) + 'px';
     chips.hidden = !show;
     askBtn.setAttribute('aria-expanded', String(show));
   });
@@ -767,7 +825,7 @@
   // the download it points at is not hidden behind him.
   log.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a');
-    if (a && a.getAttribute('href').charAt(0) === '#') panel.hidden = true;
+    if (a && a.getAttribute('href').charAt(0) === '#') close();
   });
   document.addEventListener('click', function (e) {
     if (!chips.hidden && !e.target.closest('[data-gchat-pills]')) closeMenu();
@@ -775,8 +833,8 @@
   root.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !chips.hidden) { closeMenu(); askBtn.focus(); }
   });
-  root.querySelector('[data-gchat-open]').addEventListener('click', function () { if (panel.hidden) open(); else panel.hidden = true; });
-  root.querySelector('[data-gchat-close]').addEventListener('click', function () { panel.hidden = true; });
+  root.querySelector('[data-gchat-open]').addEventListener('click', function () { if (panel.hidden) open(); else close(); });
+  root.querySelector('[data-gchat-close]').addEventListener('click', close);
   input.addEventListener('input', function () { hideHeckle(); presses = 0; });
   // Enter sends, as in any messenger; Shift and Enter is a new line.
   input.addEventListener('keydown', function (e) {

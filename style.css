@@ -27,6 +27,7 @@
   --ember: #f5820a;
   --gold: #ddc274;
   --rose: #c0392b;
+  --leaf: #7fb069;
   --ink: #140f0c;
   --pixel: 'Press Start 2P', monospace;
   --voice: 'VT323', monospace;
@@ -937,31 +938,83 @@ body[data-path="game"] .fin { display: none; }
    all canned replies in the page; nothing typed leaves the browser. */
 .gchat { position: fixed; right: 16px; bottom: 16px; z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .gchat-launch { position: relative; display: flex; align-items: center; gap: 10px; padding: 0; background: none; border: 0; cursor: pointer; font: inherit; color: var(--text); }
-.gchat-launch img { width: 64px; height: 64px; image-rendering: pixelated; border: 3px solid var(--gold); background: var(--inset); box-shadow: 4px 4px 0 #000; }
+.gchat-launch img { width: 64px; height: 64px; image-rendering: pixelated; border: 3px solid var(--ember); background: var(--inset); box-shadow: 4px 4px 0 #000; }
 .gchat-tease { padding: 8px 12px; font-family: var(--voice); font-size: 1.25rem; background: var(--panel); border: 3px solid var(--border-hi); box-shadow: 4px 4px 0 #000; }
 .gchat-badge { position: absolute; right: -6px; top: -6px; min-width: 22px; height: 22px; padding: 0 5px; font: normal .6rem/22px var(--pixel); text-align: center; color: #fff; background: var(--rose); border: 2px solid #000; }
 .gchat-badge[hidden], .gchat-tease[hidden] { display: none; }
-.gchat-panel { display: flex; flex-direction: column; width: min(360px, calc(100vw - 32px)); height: min(480px, calc(100vh - 120px)); background: var(--panel); border: 3px solid var(--gold); box-shadow: 6px 6px 0 #000; }
+/* The panel is the app's chat, laid out the same way (components/progression/
+   gibbles-chat.tsx): a header, the role line, the log, Ask and the bug pill,
+   then a composer with the box across the whole width and a slim bar under it.
+   On a phone every control is 44px and the panel keeps a 16px gutter. */
+.gchat-panel { position: relative; display: flex; flex-direction: column; width: min(400px, calc(100vw - 32px)); height: min(560px, calc(100vh - 120px)); height: min(560px, calc(100dvh - 120px)); background: var(--panel); border: 3px solid var(--ember); box-shadow: 6px 6px 0 #000; }
 .gchat-panel[hidden] { display: none; }
-.gchat-head { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--inset); border-bottom: 3px solid var(--border-hi); }
-.gchat-head img { width: 40px; height: 40px; image-rendering: pixelated; border: 2px solid var(--border-hi); }
+.gchat-head { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-bottom: 2px solid var(--border-hi); }
+.gchat-head img { flex-shrink: 0; width: 40px; height: 40px; image-rendering: pixelated; border: 2px solid var(--ember); }
 .gchat-head div { flex: 1; min-width: 0; }
-.gchat-head b { display: block; font-family: var(--pixel); font-weight: normal; font-size: .6rem; color: var(--gold); letter-spacing: .1em; }
-.gchat-head span { font-family: var(--voice); font-size: 1.05rem; color: var(--muted); }
-.gchat-x { width: 30px; height: 30px; font: normal .6rem var(--pixel); color: var(--text); background: var(--panel); border: 2px solid var(--border-hi); cursor: pointer; }
-.gchat-log { flex: 1; margin: 0; padding: 10px; list-style: none; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-.gchat-log li { max-width: 85%; padding: 7px 10px; font-family: var(--voice); font-size: 1.2rem; line-height: 1.1; border: 2px solid var(--border-hi); }
-.gchat-log li.bot { align-self: flex-start; background: var(--inset); color: var(--text); }
-.gchat-log li.me { align-self: flex-end; background: #2a2140; color: var(--text); border-color: #6f4fb0; }
-.gchat-log li.typing { color: var(--muted); font-style: italic; border-style: dashed; }
-.gchat-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 10px 8px; }
-.gchat-chips button { padding: 5px 8px; font-family: var(--voice); font-size: 1.05rem; color: var(--gold); background: var(--inset); border: 2px solid var(--border-hi); cursor: pointer; }
-.gchat-chips button:hover { border-color: var(--gold); }
-.gchat-form { display: flex; gap: 6px; padding: 8px 10px; border-top: 3px solid var(--border-hi); }
-.gchat-form input { flex: 1; min-width: 0; padding: 7px 8px; font-family: var(--voice); font-size: 1.15rem; color: var(--text); background: var(--inset); border: 2px solid var(--border-hi); }
-.gchat-form button { padding: 0 10px; font: normal .55rem var(--pixel); color: var(--ink); background: var(--gold); border: 2px solid #000; cursor: pointer; }
-.gchat-fine { margin: 0; padding: 0 10px 8px; font-family: var(--plain); font-size: .65rem; color: var(--muted); }
+.gchat-head b { display: block; font-family: var(--pixel); font-weight: normal; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--ember); }
+.gchat-head span { display: block; margin-top: 4px; font-family: var(--voice); font-size: 15px; line-height: 1; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.gchat-x { flex-shrink: 0; width: 36px; height: 36px; font: normal 9px var(--pixel); color: var(--text); background: var(--panel); border: 2px solid var(--border-hi); cursor: pointer; }
+.gchat-x:hover { border-color: var(--ember); }
+.gchat-role { display: flex; align-items: center; gap: 10px; padding: 0 12px; background: var(--inset); border-bottom: 2px solid var(--border-hi); font-family: var(--voice); font-size: 16px; line-height: 1.1; color: var(--muted); }
+.gchat-role span { flex: 1; min-width: 0; padding: 4px 0; }
+.gchat-role button { flex-shrink: 0; min-height: 30px; padding: 0; font: inherit; color: var(--muted); background: none; border: 0; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.gchat-role button:hover { color: var(--rose); }
+.gchat-log { flex: 1; min-height: 0; margin: 0; padding: 12px; list-style: none; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 8px; }
+.gchat-log li { max-width: 85%; padding: 6px 10px; font-family: var(--voice); font-size: 19px; line-height: 1.15; color: var(--text); background: var(--inset); border: 2px solid var(--border-hi); white-space: pre-wrap; overflow-wrap: anywhere; }
+.gchat-log li.bot { align-self: flex-start; }
+.gchat-log li.me { align-self: flex-end; border-color: #6f4fb0; }
+.gchat-log li.typing { color: var(--muted); font-style: italic; background: var(--panel); border-style: dashed; }
+.gchat-log a { color: var(--ember); white-space: nowrap; text-underline-offset: 2px; }
+.gchat-log a:hover { color: var(--gold); }
+.gchat-pills { position: relative; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 8px 12px; }
+.gchat-pills[hidden] { display: none; }
+.gchat-menu { position: absolute; left: 12px; bottom: 100%; z-index: 2; max-width: calc(100% - 24px); margin: 0; padding: 4px; list-style: none; display: flex; flex-direction: column; gap: 2px; background: var(--panel); border: 2px solid var(--ember); box-shadow: 4px 4px 0 #000; }
+.gchat-menu[hidden] { display: none; }
+.gchat-menu button { display: block; width: 100%; min-height: 34px; padding: 4px 10px; text-align: left; font-family: var(--voice); font-size: 19px; line-height: 1.1; color: var(--gold); background: none; border: 0; cursor: pointer; }
+.gchat-menu button:hover, .gchat-menu button:focus-visible { background: var(--inset); }
+
+/* The app's .pixel-btn: one fixed height whether or not it carries a glyph,
+   ghost for secondary, gold for the one you mean. */
+.gbtn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 14px; font-family: var(--pixel); font-size: 9px; line-height: 1; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: var(--muted); background: var(--inset); border: 2px solid var(--border-hi); cursor: pointer; }
+.gbtn svg { display: block; flex-shrink: 0; image-rendering: pixelated; }
+.gbtn span { display: block; }
+.gbtn span[hidden] { display: none; }
+.gbtn:hover { color: var(--gold); border-color: var(--gold); }
+.gbtn-ask { color: var(--gold); }
+.gbtn-bug, .gbtn-bug:hover { color: var(--rose); border-color: var(--rose); padding: 0 12px; }
+.gbtn-gold, .gchat-kinds .gbtn[aria-checked="true"] { color: var(--gold); background: #251f11; border-color: var(--gold); }
+.gbtn-gold:hover { background: #382e18; }
+.gbtn-sq { width: 36px; padding: 0; }
+.gbtn-trash:hover { color: var(--rose); border-color: var(--rose); }
+.gbtn[hidden] { display: none; }
+.gchat-send { box-shadow: 2px 2px 0 #000; }
+.gchat-send.is-bug { color: var(--rose); border-color: var(--rose); }
+.gchat-send.is-praise { color: var(--leaf); border-color: var(--leaf); }
+.gchat-form { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; padding: 8px 12px; border-top: 2px solid var(--border-hi); }
+.gchat-kinds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.gchat-kinds .gbtn { padding: 0 6px; font-size: 8px; letter-spacing: .06em; }
+.gchat-kinds[hidden] { display: none; }
+.gchat-form textarea { display: block; width: 100%; max-height: 9.5em; padding: 6px 8px; resize: none; font-family: var(--voice); font-size: 19px; line-height: 1.15; color: var(--text); background: var(--inset); border: 2px solid var(--border-hi); border-radius: 0; }
+.gchat-form textarea::placeholder { color: var(--muted); opacity: .85; }
+.gchat-form textarea:focus { outline: none; border-color: var(--ember); }
+.gchat-form textarea.is-reporting { border-color: var(--rose); }
+.gchat-bar { position: relative; display: flex; align-items: center; gap: 8px; }
+.gchat-gap { flex: 1; }
+.gchat-heckle { position: absolute; left: 0; bottom: 100%; z-index: 2; max-width: 16rem; margin-bottom: 8px; padding: 4px 8px; text-align: left; font-family: var(--voice); font-size: 17px; line-height: 1.15; color: var(--text); background: var(--panel); border: 2px solid var(--ember); box-shadow: 4px 4px 0 #000; cursor: pointer; }
+.gchat-heckle[hidden] { display: none; }
+.gchat-fine { margin: 0; padding: 0 12px 8px; font-family: var(--plain); font-size: .65rem; color: var(--muted); }
 @media (max-width: 560px) { .gchat-tease { display: none; } }
+@media (max-width: 560px), (pointer: coarse) {
+  .gbtn, .gchat-x { height: 44px; min-width: 44px; }
+  .gbtn-sq, .gchat-x { width: 44px; }
+  .gchat-role button, .gchat-menu button { min-height: 44px; }
+}
+/* Three kinds in a row do not fit 343px with their glyph beside the label,
+   so on a phone the glyph sits over it, as on a tab bar. */
+@media (max-width: 420px) {
+  .gchat-kinds .gbtn { flex-direction: column; gap: 4px; padding: 0 4px; font-size: 8px; }
+  .gchat-kinds svg { width: 15px; height: 15px; }
+}
 /* The Slay sticker bursts up in the middle of the screen when the game door
    is picked, wobbles, and is gone: a reaction, not a decoration. */
 .slay-pop { position: fixed; left: 50%; top: 45%; z-index: 80; width: min(260px, 60vw); height: auto; margin: 0; pointer-events: none;
@@ -1118,3 +1171,10 @@ body[data-path="game"] .fin { display: none; }
   .note-body { font-size: 16px; }
   .note-body ul { padding-left: 18px; }
 }
+
+/* Gibbles over the patch notes: a portrait and one line, still. A poke on the
+   portrait swaps the line. */
+.pn-gib { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; }
+.pn-gib-face { flex-shrink: 0; padding: 0; background: var(--inset); border: 3px solid var(--ember); box-shadow: 4px 4px 0 #000; cursor: pointer; }
+.pn-gib-face img { width: 56px; height: 56px; image-rendering: pixelated; }
+.pn-gib-line { flex: 1; min-width: 0; margin: 0; padding: 8px 12px; font-family: var(--voice); font-size: 20px; line-height: 1.15; color: var(--text); background: var(--panel); border: 3px solid var(--border-hi); box-shadow: 4px 4px 0 #000; overflow-wrap: anywhere; }

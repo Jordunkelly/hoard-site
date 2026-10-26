@@ -173,3 +173,32 @@
   if (!window.fetch) { fail(); return; }
   fetchAll().then(function (rels) { writeCache(rels); render(rels); }).catch(fail);
 })();
+
+/* Gibbles over the notes: one grumble a visit, and a poke for another. He
+   stays still; the line just changes. */
+(function () {
+  var line = document.querySelector('[data-pn-gib-line]');
+  var face = document.querySelector('[data-pn-gib]');
+  if (!line || !face) return;
+  var LINES = [
+    'Patch notes. The keeper writes these instead of sleeping. Read them so he feels something.',
+    'Nobody reads changelogs. You are reading a changelog. Who is the goblin now.',
+    'Fixed: a lot. Broke: also some. Read on.',
+    'Every release, newest first. Like my grudges.',
+    'Skim it. Everyone skims it. I skim it and I live here.',
+    'If your bug is fixed, you are welcome. If not, it is on the list. The list is long.',
+    'Scroll down. Look impressed. It updates itself anyway.',
+    'I counted the fixes. Then I counted them again. Same number. Disappointing.',
+    'You came here on purpose? To read this? Bold.',
+    'Every line down there is a thing somebody broke. Some of them were you.'
+  ];
+  var last = -1;
+  function next() {
+    var i;
+    do { i = Math.floor(Math.random() * LINES.length); } while (i === last && LINES.length > 1);
+    last = i;
+    line.textContent = LINES[i];
+  }
+  next();
+  face.addEventListener('click', next);
+})();

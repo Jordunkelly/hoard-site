@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=24">
+<link rel="stylesheet" href="style.css?v=25">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -325,17 +325,33 @@ Never the end of night.</p>
 <audio data-audio preload="none" loop></audio>
 <img class="slay-pop" data-gib-sticker src="assets/art/gibbles/slay.png" alt="" width="260" height="260" hidden>
 <div class="gchat" data-gchat>
-  <section class="gchat-panel" data-gchat-panel aria-label="Chat with Gibbles" hidden>
+  <section class="gchat-panel" data-gchat-panel role="dialog" aria-modal="false" aria-label="Chat with Gibbles" hidden>
     <header class="gchat-head">
       <img src="assets/art/gibbles/gibbles.webp" alt="" width="40" height="40">
-      <div><b>GIBBLES</b><span>Support Goblin. Online, unfortunately.</span></div>
+      <div><b>Gibbles</b><span>Vault clerk</span></div>
       <button type="button" class="gchat-x" data-gchat-close aria-label="Close the chat">X</button>
     </header>
-    <ol class="gchat-log" data-gchat-log aria-live="polite"></ol>
-    <div class="gchat-chips" data-gchat-chips></div>
+    <div class="gchat-role"><span>Support Goblin. Online, unfortunately.</span><button type="button" data-gchat-clear>Clear chat</button></div>
+    <ol class="gchat-log" data-gchat-log role="log" aria-live="polite" aria-label="Messages"></ol>
+    <div class="gchat-pills" data-gchat-pills>
+      <button type="button" class="gbtn gbtn-ask" data-gchat-ask aria-expanded="false" aria-haspopup="menu">Ask</button>
+      <button type="button" class="gbtn gbtn-bug" data-gchat-bug title="Send feedback" aria-label="Send feedback"><span data-pix="bug" data-scale="1.5"></span></button>
+      <ul class="gchat-menu" data-gchat-chips role="menu" aria-label="Ask Gibbles" hidden></ul>
+    </div>
     <form class="gchat-form" data-gchat-form autocomplete="off">
-      <input type="text" data-gchat-input maxlength="200" placeholder="Type something. Or don't." aria-label="Message Gibbles">
-      <button type="submit">Send</button>
+      <div class="gchat-kinds" data-gchat-kinds role="radiogroup" aria-label="What this is" hidden>
+        <button type="button" class="gbtn" role="radio" aria-checked="true" data-kind="bug"><span data-pix="bug"></span>IT BROKE</button>
+        <button type="button" class="gbtn" role="radio" aria-checked="false" data-kind="idea"><span data-pix="brain"></span>BIG BRAIN</button>
+        <button type="button" class="gbtn" role="radio" aria-checked="false" data-kind="praise"><span data-pix="flower"></span>NOT AWFUL</button>
+      </div>
+      <textarea data-gchat-input rows="3" maxlength="200" placeholder="Type something. Or don't." aria-label="Message Gibbles" spellcheck="false"></textarea>
+      <div class="gchat-bar">
+        <button type="button" class="gchat-heckle" data-gchat-heckle role="status" hidden></button>
+        <button type="submit" class="gbtn gbtn-gold gchat-send" data-gchat-send><span data-gchat-send-icon hidden></span>Send</button>
+        <button type="button" class="gbtn gbtn-sq" data-gchat-attach title="Attach files" aria-label="Attach files" hidden><span data-pix="clip" data-scale="2"></span></button>
+        <span class="gchat-gap"></span>
+        <button type="button" class="gbtn gbtn-sq gbtn-trash" data-gchat-trash title="Discard report" aria-label="Discard report" hidden><span data-pix="trash" data-scale="1.5"></span></button>
+      </div>
     </form>
     <p class="gchat-fine">Gibbles runs entirely in your browser. Nothing you type goes anywhere. He forgets it instantly. He was not listening.</p>
   </section>
@@ -345,6 +361,6 @@ Never the end of night.</p>
     <i class="gchat-badge" data-gchat-badge>1</i>
   </button>
 </div>
-<script src="site.js?v=29"></script>
+<script src="site.js?v=30"></script>
 </body>
 </html>

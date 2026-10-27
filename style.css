@@ -534,6 +534,59 @@ main > section.wrap:first-child { margin-top: 24px; }
 .nag-btn:hover { background: var(--ember); }
 .nag-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
 .panel .nag-reply { margin: 0; }
+
+/* The road to launch: three plates in the countdown's own frame, the one the
+   calendar is on lit in ember by site.js. */
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.roadmap li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px 12px;
+  background: var(--inset);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 #000;
+}
+.roadmap .rm-num {
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--muted);
+}
+.roadmap b {
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gold);
+}
+.roadmap li > span:last-child {
+  font-family: var(--voice);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--muted);
+}
+.roadmap li.is-now { border-color: var(--ember); }
+.roadmap li.is-now .rm-num { color: var(--ember); }
+.roadmap li.is-now .rm-num::after { content: ' You are here'; }
+.roadmap li.is-now > span:last-child { color: var(--text); }
+.panel .roadmap-gib { margin: 0 0 20px; }
+.dl-steam {
+  max-width: 460px;
+  margin: 12px 0 0;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--gold);
+  text-shadow: 1px 1px 0 #000;
+}
+.dl-steam a { color: var(--ember); }
 .finale em { font-style: normal; color: var(--ember); }
 
 .wip {
@@ -707,6 +760,7 @@ main > section.wrap:first-child { margin-top: 24px; }
   .countdown { gap: 8px; }
   .countdown span { font-size: 17px; }
   .nag { flex-direction: column; align-items: flex-start; }
+  .roadmap { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .sprite { justify-self: center; width: 180px; }
   .sprite.wide { width: 100%; }
   .clerk { width: 180px; justify-self: center; }

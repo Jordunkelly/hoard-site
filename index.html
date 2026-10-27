@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hoard</title>
-<meta name="description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy. Steam release aimed at Christmas 2026.">
+<meta name="description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy. Steam launch aimed at April 2027.">
 <meta name="theme-color" content="#f5820a">
 <meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Hoard">
 <meta property="og:title" content="Hoard">
-<meta property="og:description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy. Steam release aimed at Christmas 2026.">
+<meta property="og:description" content="A budget app that is secretly a goblin RPG. It reads your bank alerts and judges you. No cloud. No ads. No mercy. Steam launch aimed at April 2027.">
 <meta property="og:url" content="https://jordunkelly.github.io/hoard-site/">
 <meta property="og:image" content="https://jordunkelly.github.io/hoard-site/assets/og.png?v=2">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/vt323-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/art/vault.webp" as="image">
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=27">
 <script>
 // Runs before the body paints, so a phone never flashes a download button it
 // cannot use. iPadOS asks for the desktop site and reports itself as a Mac,
@@ -77,7 +77,7 @@
     <div class="launch">
     <a class="steam-box" href="#steam">
       <span class="steam-mark"><img src="assets/art/steam-logo.svg" alt="Steam" width="165" height="50"></span>
-      <span class="steam-when">Coming<br>Christmas 2026</span>
+      <span class="steam-when">Coming<br>April 2027</span>
     </a>
     <a class="watch-chip" href="#watch">Crystal Watch</a>
     </div>
@@ -94,6 +94,7 @@
       <button type="button" class="btn-send" data-send>Send it to my PC</button>
     </div>
     <p class="dl-meta" data-dl-meta>Windows only. It updates itself. Private testing, so it asks for your key.</p>
+    <p class="dl-steam">The alpha moves to Steam this week. Until the store page is up, this download still works.<a data-steam-link hidden> Find it on Steam.</a></p>
     <p class="smartscreen">Windows might clutch its pearls because the installer isn't signed yet. Hit <b>More info</b>, then <b>Run anyway</b>.</p>
   </div>
   <a class="scroll-cue" href="#doors" aria-label="Read on">&#9660;</a>
@@ -276,15 +277,21 @@ Never the end of night.</p>
     <div class="panel steam reveal">
       <div class="steam-head">
         <img src="assets/art/steam-logo.svg" alt="Steam" width="165" height="50" loading="lazy">
-        <h2>When's Steam? Aiming for Christmas.</h2>
+        <h2>When's Steam? Aiming for April.</h2>
       </div>
-      <div class="countdown" aria-label="Time left until Christmas 2026">
+      <div class="countdown" aria-label="Time left until the Steam launch in April 2027">
         <div><b data-cd="d">--</b><span>days</span></div>
         <div><b data-cd="h">--</b><span>hours</span></div>
         <div><b data-cd="m">--</b><span>mins</span></div>
         <div><b data-cd="s">--</b><span>secs</span></div>
       </div>
       <p class="spite" data-spite hidden></p>
+      <ol class="roadmap" aria-label="The road to launch">
+        <li data-rm-until="2026-12-01"><span class="rm-num">1</span><b>Alpha on Steam</b><span>Now until December</span></li>
+        <li data-rm-until="2027-04-01"><span class="rm-num">2</span><b>Beta</b><span>December to March</span></li>
+        <li><span class="rm-num">3</span><b>Launch</b><span>April 2027</span></li>
+      </ol>
+      <p class="speech-text roadmap-gib">Alpha now. You break it, I sneer at it. Beta when it stops catching fire. April, I start charging gold.</p>
       <div class="nag">
         <button type="button" class="nag-btn" data-nag>Are we there yet?</button>
         <p class="speech-text nag-reply" data-nag-reply aria-live="polite">Aiming, not promising. Goblins don't do promises. Promises are contracts, and contracts cost extra.</p>
@@ -310,6 +317,7 @@ Never the end of night.</p>
           <button type="button" class="btn-send" data-send>Send it to my PC</button>
         </div>
         <p class="dl-meta" data-dl-meta>Windows only. It updates itself. Private testing, so it asks for your key.</p>
+        <p class="dl-steam">The alpha moves to Steam this week. Until the store page is up, this download still works.<a data-steam-link hidden> Find it on Steam.</a></p>
       </div>
     </div>
   </section>
@@ -361,6 +369,6 @@ Never the end of night.</p>
     <i class="gchat-badge" data-gchat-badge>1</i>
   </button>
 </div>
-<script src="site.js?v=31"></script>
+<script src="site.js?v=32"></script>
 </body>
 </html>

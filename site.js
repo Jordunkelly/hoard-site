@@ -1,6 +1,9 @@
 (function () {
   var RELEASES = 'https://api.github.com/repos/Jordunkelly/hoard-releases/releases/latest';
   var INSTALLER = 'Hoard-Setup.exe';
+  // The Steam store page. Empty until the page exists; set it and every
+  // [data-steam-link] on the page turns into a visible link to it.
+  var STEAM_STORE = '';
 
   // Colours are the app's own, from lib/built-in-themes.json, so a lair
   // picked here looks like the one you get.
@@ -198,10 +201,28 @@
       .catch(function () {});
   }
 
-  // Midnight on Christmas morning in the visitor's own timezone. Every
-  // "Are we there yet" past the fourth adds a day of spite to the display, and
-  // a reload forgives it.
-  var CHRISTMAS = new Date(2026, 11, 25).getTime();
+  if (STEAM_STORE) {
+    document.querySelectorAll('[data-steam-link]').forEach(function (a) { a.href = STEAM_STORE; a.hidden = false; });
+  }
+
+  // The roadmap marks the step the calendar is on, so it does not need an
+  // edit on the day alpha turns into beta. Each step lasts until the local
+  // midnight in its data-rm-until; the last one has none and runs forever.
+  var steps = document.querySelectorAll('.roadmap li');
+  for (var si = 0; si < steps.length; si++) {
+    var until = steps[si].getAttribute('data-rm-until');
+    var end = until ? new Date(Number(until.slice(0, 4)), Number(until.slice(5, 7)) - 1, Number(until.slice(8, 10))).getTime() : Infinity;
+    if (Date.now() < end) {
+      steps[si].classList.add('is-now');
+      steps[si].setAttribute('aria-current', 'step');
+      break;
+    }
+  }
+
+  // Midnight on 1 April 2027, the Steam launch, in the visitor's own timezone.
+  // Every "Are we there yet" past the fourth adds a day of spite to the
+  // display, and a reload forgives it.
+  var LAUNCH = new Date(2027, 3, 1).getTime();
   var DAY = 86400000;
   var spite = 0;
   var cd = {};
@@ -216,14 +237,14 @@
     'Ask me one more time and I add a day.',
     'SPITE',
     'Keep going. I have all year. Literally.',
-    'Do you want it to be Easter? Because this is how it becomes Easter.'
+    'Do you want it to be summer? Because this is how it becomes summer.'
   ];
   var nagAt = 0;
 
   function pad(n) { return n < 10 ? '0' + n : String(n); }
 
   function tick() {
-    var left = CHRISTMAS + spite * DAY - Date.now();
+    var left = LAUNCH + spite * DAY - Date.now();
     if (left <= 0) {
       cd.d.textContent = cd.h.textContent = cd.m.textContent = cd.s.textContent = '00';
       nagReply.textContent = 'Any day now. Stop refreshing.';
@@ -439,10 +460,11 @@
       'Wave thirty has a king. He is not nice. He is not supposed to be.',
       'It lives inside Hoard. Budget in one tab, towers in the other. Like a responsible adult.' ] },
     { k: /(steam|when|release|launch|out|date)/, a: [
-      'Steam, aiming for Christmas 2026. Aiming. Not promising. Goblins do not do promises.',
-      'Christmas 2026, on Steam. Ask again and it moves to Easter.',
+      'Steam, aiming for April 2027. Aiming. Not promising. Goblins do not do promises.',
+      'April 2027, on Steam. Ask again and it moves to summer.',
+      'Alpha on Steam from November. Beta from December to March. April 2027 it goes live and I start charging gold.',
       'There is a countdown on this page. Stare at it. It does not go faster. I tried.',
-      'Steam. Christmas. Aiming. Do not make me say the word promise.',
+      'Steam. April. Aiming. Do not make me say the word promise.',
       'Wishlist it when the Steam page is up. It helps. Nobody knows how. It just does.' ] },
     { k: /(price|cost|free|pay|money|cheap|how much)/, a: [
       'Testers get a free Steam key at launch. Everyone else will pay. I like gold. Obviously.',
